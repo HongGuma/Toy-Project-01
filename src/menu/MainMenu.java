@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class MainMenu {
     public void printMainMenu(){
         Scanner scanner = new Scanner(System.in);
+        GradeMenu gradeMenu = new GradeMenu();
         while(true){
             System.out.println("================================");
             System.out.println("1. 등급 분류 설정");
@@ -23,6 +24,7 @@ public class MainMenu {
                 case 1:
                     //TODO : 등급 분류 기능 연결하기
                     System.out.println("1번 선택");
+                    gradeMenu.printGradeMenu();
                     break;
                 case 2:
                     //TODO : 고객 정보 입력 기능 연결하기
