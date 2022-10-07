@@ -10,11 +10,13 @@ public class MainMenu {
     public void printMainMenu(){
         Scanner scanner = new Scanner(System.in);
         GradeMenu gradeMenu = new GradeMenu();
+        CustomerMenu customerMenu = new CustomerMenu();
+        ClassificationMenu classificationMenu = new ClassificationMenu();
         while(true){
-            System.out.println("================================");
+            System.out.println("=========== 메인 메뉴 ===========");
             System.out.println("1. 등급 분류 설정");
             System.out.println("2. 고객 정보");
-            System.out.println("3. 고객 정보 확인");
+            System.out.println("3. 고객 등급 분류");
             System.out.println("4. 종료");
             System.out.println("================================");
             System.out.print(">> ");
@@ -32,17 +34,13 @@ public class MainMenu {
 
             switch (inputNum){
                 case 1:
-                    //TODO : 등급 분류 기능 연결하기
-                    System.out.println("1번 선택");
                     gradeMenu.printGradeMenu();
                     break;
                 case 2:
-                    //TODO : 고객 정보 입력 기능 연결하기
-                    System.out.println("2번 선택");
+                    customerMenu.printCustomerMenu();
                     break;
                 case 3:
-                    //TODO : 고객 분류 출력 기능 연결하기
-                    System.out.println("3번 선택");
+                    classificationMenu.printClassificationMenu();
                     break;
                 case 4:
                     System.out.println("종료합니다.");
