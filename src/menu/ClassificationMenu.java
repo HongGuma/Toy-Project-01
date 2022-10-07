@@ -4,21 +4,22 @@ import java.util.Scanner;
 
 /**
  * @author 홍수희
- * 등급 분류 기준 설정하는 메뉴
+ * 고객 분류 메뉴
  */
-public class GradeMenu {
+public class ClassificationMenu {
     /**
-     * 등급 분류 기준을 설정하는 메뉴를 출력하는 함수
+     * 고객을 등급별로 분류하는 메뉴를 출력하는 함수
      */
-    public void printGradeMenu(){
+    public void printClassificationMenu(){
         Scanner scanner = new Scanner(System.in);
         while (true){
-            System.out.println("********* 분류 기준 설정 **********");
-            System.out.println("1. 분류 기준 설정하기");
-            System.out.println("2. 분류 기준 확인하기");
-            System.out.println("3. 분류 기준 수정하기");
-            System.out.println("4. 뒤로가기");
-            System.out.println("********************************");
+            System.out.println("+++++++++++ 등급별 분류 +++++++++++");
+            System.out.println("1. 등급별 분류");
+            System.out.println("2. 등급별 분류 : 이름순 정렬");
+            System.out.println("3. 등급별 분류 : 이용시간순 정렬");
+            System.out.println("4. 등급별 분류 : 결제금액순 정렬");
+            System.out.println("5. 뒤로가기");
+            System.out.println("++++++++++++++++++++++++++++++++");
             System.out.print(">>");
 
             String input = scanner.next();
@@ -34,15 +35,18 @@ public class GradeMenu {
 
             switch (inputNum){
                 case 1:
-                    System.out.println("분류 기준을 설정합니다.");
+                    System.out.println("그냥 분류");
                     break;
                 case 2:
-                    System.out.println("분류 기준을 확인합니다.");
+                    System.out.println("그냥 분류 + 이름순 정렬");
                     break;
                 case 3:
-                    System.out.println("분류 기준을 수정합니다.");
+                    System.out.println("그냥 분류 + 이용시간순 정렬");
                     break;
                 case 4:
+                    System.out.println("그냥 분류 + 결제금액순 정렬");
+                    break;
+                case 5:
                     System.out.println("『");
                     System.out.println("    메인화면으로 돌아갑니다.");
                     System.out.println("                           』");
@@ -52,7 +56,7 @@ public class GradeMenu {
                     System.out.println("    잘못된 입력입니다. 메뉴에 있는 숫자만 입력해주세요.");
                     System.out.println("                                                  』");
             }
-            if(inputNum == 4) break;
+            if(inputNum == 5) break;
         }
     }
 }
