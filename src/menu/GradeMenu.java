@@ -13,12 +13,12 @@ public class GradeMenu {
     public void printGradeMenu(){
         Scanner scanner = new Scanner(System.in);
         while (true){
-            System.out.println("*****************************");
+            System.out.println("********************************");
             System.out.println("1. 분류 기준 설정하기");
             System.out.println("2. 분류 기준 확인하기");
             System.out.println("3. 분류 기준 수정하기");
             System.out.println("4. 뒤로가기");
-            System.out.println("*****************************");
+            System.out.println("********************************");
 
             String input = scanner.next();
             int inputNum = 0;

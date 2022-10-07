@@ -18,9 +18,19 @@ public class MainMenu {
             System.out.println("4. 종료");
             System.out.println("================================");
             System.out.print(">> ");
-            int choiceNum = scanner.nextInt();
 
-            switch (choiceNum){
+            String input = scanner.next();
+            int inputNum = 0;
+            if(input.charAt(0) >= 48 && input.charAt(0) <= 57)
+                inputNum = Integer.parseInt(input);
+            else{
+                System.out.println("『");
+                System.out.println("    잘못된 입력입니다. 숫자만 입력해주세요.");
+                System.out.println("                                        』");
+                continue;
+            }
+
+            switch (inputNum){
                 case 1:
                     //TODO : 등급 분류 기능 연결하기
                     System.out.println("1번 선택");
@@ -38,10 +48,12 @@ public class MainMenu {
                     System.out.println("종료합니다.");
                     break;
                 default:
-                    System.out.println("잘못된 입력입니다. 1~4번만 입력해주세요.");
+                    System.out.println("『");
+                    System.out.println("    잘못된 입력입니다. 메뉴에 있는 숫자만 입력해주세요.");
+                    System.out.println("                                                  』");
                     break;
             }
-            if(choiceNum == 4) break;
+            if(inputNum == 4) break;
         }
 
     }
