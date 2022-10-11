@@ -1,5 +1,7 @@
 package menu;
 
+import exception.InputNumberException;
+
 import java.util.Scanner;
 
 /**
@@ -7,11 +9,12 @@ import java.util.Scanner;
  * 등급 분류 기준 설정하는 메뉴
  */
 public class GradeMenu {
+    static Scanner scanner = new Scanner(System.in);
+    static InputNumberException numberException = new InputNumberException();
     /**
      * 등급 분류 기준을 설정하는 메뉴를 출력하는 함수
      */
     public void printGradeMenu(){
-        Scanner scanner = new Scanner(System.in);
         while (true){
             System.out.println("********* 분류 기준 설정 **********");
             System.out.println("1. 분류 기준 설정하기");
@@ -22,15 +25,8 @@ public class GradeMenu {
             System.out.print(">>");
 
             String input = scanner.next();
-            int inputNum = 0;
-            if(input.charAt(0) >= 48 && input.charAt(0) <= 57)
-                inputNum = Integer.parseInt(input);
-            else{
-                System.out.println("『");
-                System.out.println("    잘못된 입력입니다. 숫자만 입력해주세요.");
-                System.out.println("                                        』");
-                continue;
-            }
+            int inputNum = numberException.exception(input);
+            if(inputNum == -1) continue;
 
             switch (inputNum){
                 case 1:
@@ -46,13 +42,12 @@ public class GradeMenu {
                     System.out.println("『");
                     System.out.println("    메인화면으로 돌아갑니다.");
                     System.out.println("                           』");
-                    break;
+                    return;
                 default:
                     System.out.println("『");
                     System.out.println("    잘못된 입력입니다. 메뉴에 있는 숫자만 입력해주세요.");
                     System.out.println("                                                  』");
             }
-            if(inputNum == 4) break;
         }
     }
 }

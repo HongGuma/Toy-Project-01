@@ -1,5 +1,7 @@
 package customer;
 
+import exception.InputNumberException;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -23,6 +25,7 @@ public class Customers {
     }*/
 
     static Scanner scanner = new Scanner(System.in);
+    static InputNumberException numberException = new InputNumberException();
 
     /**
      * 고객의 데이터를 추가하는 함수
@@ -33,15 +36,8 @@ public class Customers {
         System.out.print(">>");
         String input = scanner.next();
 
-        //TODO : 숫자만 입력받는거 예외처리 코드 너무 중복되는데 함수로 따로 만들어보기
-        if(input.charAt(0) >= 48 && input.charAt(0) <= 57) //숫자가 아닐때 예외 처리
-            customerCnt = Integer.parseInt(input);
-        else{
-            System.out.println("『");
-            System.out.println("    잘못된 입력입니다. 숫자만 입력해주세요.");
-            System.out.println("                                        』");
-            return;
-        }
+        customerCnt = numberException.exception(input);
+        if(customerCnt == -1) return;
 
         Customer[] newCustomers = inputCustomerInfo(customerCnt); //newCustomers 라는 새로운 객체에 입력 받았던 데이터 넣기
         int originArrayNum = countNullObject(); //기존 객체 배열에 실제로 담긴 데이터 개수
@@ -219,16 +215,9 @@ public class Customers {
                     System.out.println("5. 종료");
                     System.out.print(">>");
                     String input = scanner.next();
-                    int selectNum = 0;
-                    //TODO: 숫자만 입력 입력예외처리
-                    if(input.charAt(0) >= 48 && input.charAt(0) <= 57) //숫자가 아닐때 예외 처리
-                        selectNum = Integer.parseInt(input);
-                    else{
-                        System.out.println("『");
-                        System.out.println("    잘못된 입력입니다. 숫자만 입력해주세요.");
-                        System.out.println("                                        』");
-                        continue;
-                    }
+                    int selectNum = numberException.exception(input);
+                    if(selectNum == -1) continue;
+
                     switch (selectNum){
                         case 1:
                             System.out.println("현재 이름 : "+customer.getCustomerName());

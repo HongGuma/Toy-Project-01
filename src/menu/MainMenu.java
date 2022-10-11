@@ -1,5 +1,7 @@
 package menu;
 
+import exception.InputNumberException;
+
 import java.util.Scanner;
 
 /***
@@ -7,8 +9,9 @@ import java.util.Scanner;
  * 메인 메뉴 출력하는 클래스
  */
 public class MainMenu {
+    static Scanner scanner = new Scanner(System.in);
+    static InputNumberException numberException = new InputNumberException();
     public void printMainMenu(){
-        Scanner scanner = new Scanner(System.in);
         GradeMenu gradeMenu = new GradeMenu();
         CustomerMenu customerMenu = new CustomerMenu();
         ClassificationMenu classificationMenu = new ClassificationMenu();
@@ -22,15 +25,8 @@ public class MainMenu {
             System.out.print(">> ");
 
             String input = scanner.next();
-            int inputNum = 0;
-            if(input.charAt(0) >= 48 && input.charAt(0) <= 57)
-                inputNum = Integer.parseInt(input);
-            else{
-                System.out.println("『");
-                System.out.println("    잘못된 입력입니다. 숫자만 입력해주세요.");
-                System.out.println("                                        』");
-                continue;
-            }
+            int inputNum = numberException.exception(input);
+            if(inputNum == -1) continue;
 
             switch (inputNum){
                 case 1:
@@ -44,14 +40,14 @@ public class MainMenu {
                     break;
                 case 4:
                     System.out.println("종료합니다.");
-                    break;
+                    return;
                 default:
                     System.out.println("『");
                     System.out.println("    잘못된 입력입니다. 메뉴에 있는 숫자만 입력해주세요.");
                     System.out.println("                                                  』");
                     break;
             }
-            if(inputNum == 4) break;
+
         }
 
     }
