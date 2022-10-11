@@ -1,5 +1,7 @@
 package menu;
 
+import customer.Customers;
+
 import java.util.Scanner;
 
 /**
@@ -9,6 +11,7 @@ import java.util.Scanner;
 public class CustomerMenu {
     public void printCustomerMenu(){
         Scanner scanner = new Scanner(System.in);
+        Customers customers = new Customers();
         while (true){
             System.out.println("########### 고객 정보 ###########");
             System.out.println("1. 고객 정보 추가하기");
@@ -32,16 +35,16 @@ public class CustomerMenu {
 
             switch (inputNum){
                 case 1:
-                    System.out.println("고객 정보를 입력합니다.");
+                    customers.insertCustomer();
                     break;
                 case 2:
-                    System.out.println("고객 정보를 확인합니다.");
+                    customers.printCustomer();
                     break;
                 case 3:
-                    System.out.println("고객 정보를 수정합니다.");
+                    customers.editCustomer();
                     break;
                 case 4:
-                    System.out.println("고객 정보를 삭제합니다.");
+                    customers.removeCustomer();
                     break;
                 case 5:
                     System.out.println("『");
