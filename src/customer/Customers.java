@@ -51,7 +51,8 @@ public class Customers {
             for(int i=0; i<customers.length; i++){ //기존 객체 배열의 빈 값에 새로 입력 받은 객체 배열 값 넣기
                 if(customers[i] == null){ //빈 데이터 자리에만 넣으려고
                     customers[i] = newCustomers[n];
-                    n++; //새로운 객체배열의 크기는 기존 객체 배열의 크기보다 클 수 없다. index 에러 안일어남
+                    n++;
+                    if(n > newCustomers.length-1) return; // n 이 newCustomers 의 크기만큼 커지면 입력이 끝난다. 입력 종료
                 }
             }
         }
@@ -64,6 +65,8 @@ public class Customers {
      * @return 새로만든 Customer 객체 배열
      */
     public Customer[] inputCustomerInfo(int num){
+        //TODO : 아이디 입력시 중복 체크? 기능 추가하기?
+        //TODO : 입력받을때 예외 상황이 발생하면 처음부터 돌아가는거 수정하기
         Customer[] insertCustomers = new Customer[num]; //입력받은 수 만큼 Customer 객체 배열 생성
         String name = ""; //입력받을 사용자 이름
         String id = ""; //입력받을 사용자 아이디
@@ -142,7 +145,7 @@ public class Customers {
     public int countNullObject(){
         int cnt = 0;
         for(Customer c : this.customers){ //null 이 아닌 데이터만 세기
-            if(c == null) cnt++;
+            if(c != null) cnt++;
         }
         return cnt;
     }
