@@ -6,9 +6,13 @@ import java.util.regex.Pattern;
 public class Customers {
 
     private Customer[] customers;
+    private final String ID_REGEX = "^[a-zA-Z0-9_-]{4,}$"; //아이디 정규표현식 (영문자 4자 이상만 가능)
 
     public Customers(){
         this.customers = new Customer[10];
+        customers[0] = new Customer("김철수","kim123",32,120000);
+        customers[1] = new Customer("이영희","lee123",20,300000);
+        customers[2] = new Customer("박문대","park1234",3,5000);
     }
 
    /* public Customers(int size){
@@ -24,7 +28,6 @@ public class Customers {
      * 고객의 데이터를 추가하는 함수
      */
     public void insertCustomer(){
-        String ID_REGEX = "^[a-zA-Z0-9_-]{4,}$"; //아이디 정규표현식 (영문자 4자 이상만 가능)
         int customerCnt = 0; //추가할 고객의 수
         System.out.println("추가할 고객의 인원을 입력해주세요."); //입력 유도 메시지
         System.out.print(">>");
@@ -40,7 +43,7 @@ public class Customers {
             return;
         }
 
-        Customer[] newCustomers = inputCustomerInfo(customerCnt,ID_REGEX); //newCustomers 라는 새로운 객체에 입력 받았던 데이터 넣기
+        Customer[] newCustomers = inputCustomerInfo(customerCnt); //newCustomers 라는 새로운 객체에 입력 받았던 데이터 넣기
         int originArrayNum = countNullObject(); //기존 객체 배열에 실제로 담긴 데이터 개수
 
         if(newCustomers.length > this.customers.length){ //새로 입력받은 객체배열의 크기가 기존 객체 배열의 크기보다 크다면
@@ -62,10 +65,9 @@ public class Customers {
     /**
      * 사용자에게 데이터 입력받는 함수
      * @param num 추가할 고객의 수
-     * @param REGEX 아이디 정규표현식
      * @return 새로만든 Customer 객체 배열
      */
-    public Customer[] inputCustomerInfo(int num, String REGEX){
+    public Customer[] inputCustomerInfo(int num){
         Customer[] insertCustomers = new Customer[num]; //입력받은 수 만큼 Customer 객체 배열 생성
         String name = ""; //입력받을 사용자 이름
         String id = ""; //입력받을 사용자 아이디
@@ -87,7 +89,7 @@ public class Customers {
             System.out.println("고객 아이디 입력 (영문자, 4글자 이상)");
             System.out.print(">>");
             id = scanner.next();
-            if(!Pattern.matches(REGEX,id)){ //정규표현식이랑 맞지 않을때 예외 처리
+            if(!Pattern.matches(ID_REGEX,id)){ //정규표현식이랑 맞지 않을때 예외 처리
                 System.out.println("【 아이디는 영문자만 4글자 이상 입력해주세요. 처음으로 돌아갑니다. 】");
                 continue;
             }
@@ -149,19 +151,133 @@ public class Customers {
         return cnt;
     }
 
-    public void removeCustomer(){
-        System.out.print("삭제할 고객의 아이디를 입력해주세요 >> ");
-        String inputId = scanner.next();
-    }
-
+    /**
+     * 고객 데이터 출력하는 함수
+     */
     public void printCustomer(){
+        int cnt = 0;
         for(Customer customer : this.customers){
-            if(customer != null) System.out.println(customer.toString());
+            if(customer != null){
+                System.out.println(customer.toString());
+                cnt++;
+            }
+        }
+        //아무 데이터가 없으면 출력
+        if(cnt == 0 ) {
+            System.out.println("『");
+            System.out.println("    고객 데이터가 없습니다.");
+            System.out.println("                          』");
         }
     }
 
+    /**
+     * 고객정보 삭제하는 함수
+     */
+    public void removeCustomer(){
+        System.out.print("삭제할 고객의 아이디를 입력해주세요 >> ");
+        String inputId = scanner.next();
+        //값을 삭제하고 뒤에 값들을 하나씩 앞으로 당기고 싶음 어캐 할까...
+        for(Customer customer : this.customers){
+            if(customer != null){
+                if(customer.getCustomerId().equals(inputId)){
+                    return; //1개 삭제하면 for문 더 돌지 않고 끝내기
+                }
+            }
+        }
+
+        System.out.println("『");
+        System.out.println("    없는 아이디 입니다.");
+        System.out.println("                       』");
+    }
+
+    /**
+     * 고객정보 수정하는 함수
+     */
     public void editCustomer(){
         System.out.print("수정할 고객의 아이디를 입력해주세요 >> ");
         String inputId = scanner.next();
+        for(Customer customer : this.customers){
+            if(customer != null && customer.getCustomerId().equals(inputId)){
+                while(true){
+                    System.out.println("###############################");
+                    System.out.println("1. 이름 수정");
+                    System.out.println("2. 아이디 수정");
+                    System.out.println("3. 스토어 이용 시간 수정");
+                    System.out.println("4. 스토어 사용 금액 수정");
+                    System.out.println("5. 종료");
+                    System.out.print(">>");
+                    String input = scanner.next();
+                    int selectNum = 0;
+                    //TODO: 숫자만 입력 입력예외처리
+                    if(input.charAt(0) >= 48 && input.charAt(0) <= 57) //숫자가 아닐때 예외 처리
+                        selectNum = Integer.parseInt(input);
+                    else{
+                        System.out.println("『");
+                        System.out.println("    잘못된 입력입니다. 숫자만 입력해주세요.");
+                        System.out.println("                                        』");
+                        continue;
+                    }
+                    switch (selectNum){
+                        case 1:
+                            System.out.println("현재 이름 : "+customer.getCustomerName());
+                            while(true){
+                                System.out.print("수정할 이름 : ");
+                                String newName = scanner.next();
+                                if(newName.length() < 3){
+                                    System.out.println("3글자 이상");
+                                }else{
+                                    customer.setCustomerName(newName);
+                                    break;
+                                }
+                            }
+                            break;
+                        case 2:
+                            System.out.println("현재 아이디 : "+customer.getCustomerId());
+                            while(true){
+                                System.out.print("수정할 아이디 : ");
+                                String newId = scanner.next();
+                                if(!Pattern.matches(ID_REGEX,newId)){
+                                    System.out.println("영문자, 4글자 이상");
+                                }else{
+                                    customer.setCustomerId(newId);
+                                    break;
+                                }
+                            }
+                            break;
+                        case 3:
+                            System.out.println("현재 스토어 이용 시간 : "+customer.getSpentTime());
+                            while(true){
+                                System.out.print("수정할 시간 : ");
+                                String newTime = scanner.next();
+                                if(newTime.charAt(0) >= 48 && newTime.charAt(0) <= 57){
+                                    customer.setSpentTime(Integer.parseInt(newTime));
+                                    break;
+                                }else{
+                                    System.out.println("숫자만 입력");
+                                }
+                            }
+                            break;
+                        case 4:
+                            System.out.println("현재 스토어 이용 금액 : "+customer.getTotalPay());
+                            while(true){
+                                System.out.print("수정할 금액 : ");
+                                String newPay = scanner.next();
+                                if(newPay.charAt(0) >= 48 && newPay.charAt(0) <= 57){
+                                    customer.setTotalPay(Integer.parseInt(newPay));
+                                    break;
+                                }else{
+                                    System.out.println("숫자만 입력");
+                                }
+                            }
+                            break;
+                        case 5:
+                            System.out.println("수정 완료");
+                            return;
+                        default:
+                            System.out.println("메뉴에 있는 번호만 입력");
+                    }
+                }
+            }
+        }
     }
 }
