@@ -24,7 +24,7 @@ public class Customers {
      * 고객의 데이터를 추가하는 함수
      */
     public void insertCustomer(){
-        String ID_REGEX = "^[a-zA-Z]*${4,}"; //아이디 정규표현식 (영문자 4자 이상만 가능)
+        String ID_REGEX = "^[a-zA-Z0-9_-]{4,}$"; //아이디 정규표현식 (영문자 4자 이상만 가능)
         int customerCnt = 0; //추가할 고객의 수
         System.out.println("추가할 고객의 인원을 입력해주세요."); //입력 유도 메시지
         System.out.print(">>");
@@ -37,6 +37,7 @@ public class Customers {
             System.out.println("『");
             System.out.println("    잘못된 입력입니다. 숫자만 입력해주세요.");
             System.out.println("                                        』");
+            return;
         }
 
         Customer[] newCustomers = inputCustomerInfo(customerCnt,ID_REGEX); //newCustomers 라는 새로운 객체에 입력 받았던 데이터 넣기
@@ -56,7 +57,6 @@ public class Customers {
             }
         }
 
-
     }
 
     /**
@@ -75,10 +75,11 @@ public class Customers {
 
         while(i<num){
             // 이름 입력받기
+            System.out.println("~** "+(i+1)+"번 입력 중 **~");
             System.out.println("고객 이름 입력 (3글자 이상)");
             System.out.print(">>");
             name = scanner.next();
-            if(!Pattern.matches("^{3,}$",name)){ //3글자 이하 입력 예외 처리
+            if(name.length() < 3){ //3글자 이하 입력 예외 처리
                 System.out.println("【 3글자 이상 입력해주세요. 】");
                 continue;
             }
@@ -92,6 +93,7 @@ public class Customers {
             }
             //스토어 이용시간 입력 받기
             System.out.println("스토어 이용시간 입력");
+            System.out.print(">>");
             String input1 = scanner.next();
             if(input1.charAt(0) >= 48 && input1.charAt(0) <= 57){ //숫자가 아닐때 예외 처리
                 spentTime = Integer.parseInt(input1);
@@ -100,6 +102,7 @@ public class Customers {
             }
             //스토어 사용 금액 입력 받기
             System.out.println("스토어에서 사용한 금액 입력");
+            System.out.print(">>");
             String input2 = scanner.next();
             if(input2.charAt(0) >= 48 && input2.charAt(0) <= 57){ //숫자가 아닐때 예외 처리
                 totalPay = Integer.parseInt(input1);
@@ -152,9 +155,9 @@ public class Customers {
     }
 
     public void printCustomer(){
-        System.out.println("『");
-        System.out.println("    고객 데이터 출력");
-        System.out.println("                     』");
+        for(Customer customer : this.customers){
+            if(customer != null) System.out.println(customer.toString());
+        }
     }
 
     public void editCustomer(){
