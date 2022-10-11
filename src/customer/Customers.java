@@ -26,8 +26,7 @@ public class Customers {
     public void insertCustomer(){
         String ID_REGEX = "^[a-zA-Z]*${4,}"; //아이디 정규표현식 (영문자 4자 이상만 가능)
         int customerCnt = 0; //추가할 고객의 수
-        countNullObject();
-        System.out.println("추가할 고객의 인원을 입력해주세요.");
+        System.out.println("추가할 고객의 인원을 입력해주세요."); //입력 유도 메시지
         System.out.print(">>");
         String input = scanner.next();
 
@@ -40,9 +39,23 @@ public class Customers {
             System.out.println("                                        』");
         }
 
-        //TODO : 새로 추가한 데이터를 기존 배열에 넣는 함수 만들기 (배열 확장해야댐)
-        Customer[] newCustomers = inputCustomerInfo(customerCnt,ID_REGEX);
-        extendCustomersArray(newCustomers);
+        Customer[] newCustomers = inputCustomerInfo(customerCnt,ID_REGEX); //newCustomers 라는 새로운 객체에 입력 받았던 데이터 넣기
+        int originArrayNum = countNullObject(); //기존 객체 배열에 실제로 담긴 데이터 개수
+
+        if(newCustomers.length > this.customers.length){ //새로 입력받은 객체배열의 크기가 기존 객체 배열의 크기보다 크다면
+            extendCustomersArray(newCustomers); //기존 객체 확장
+        }else if(this.customers.length - originArrayNum < newCustomers.length ){ //기존 객체 배열의 빈 데이터 크기보다 새로 입력받은 객체배열의 크기가 크다면
+            extendCustomersArray(newCustomers); //기존 객체 확장
+        }else{ //기존 객체 배열의 빈 데이터 크기보다 새로 입력 받은 객체배열의 크기가 작다면
+            int n = 0;
+            for(int i=0; i<customers.length; i++){ //기존 객체 배열의 빈 값에 새로 입력 받은 객체 배열 값 넣기
+                if(customers[i] == null){ //빈 데이터 자리에만 넣으려고
+                    customers[i] = newCustomers[n];
+                    n++; //새로운 객체배열의 크기는 기존 객체 배열의 크기보다 클 수 없다. index 에러 안일어남
+                }
+            }
+        }
+
 
     }
 
@@ -102,27 +115,32 @@ public class Customers {
 
     }
 
+    /**
+     * 기존의 객체 배열을 확장하는 함수
+     * @param newCustomers : 새로 입력받은 객체 배열
+     */
     public void extendCustomersArray(Customer[] newCustomers){
-        int originArrayNum = countNullObject();
-        if(newCustomers.length > originArrayNum){
-            int size = this.customers.length + newCustomers.length;
-            Customer[] tmp = new Customer[size];
-            int i=0;
-            for(Customer origin : this.customers){
-                if(origin != null){
-                    tmp[i] = origin;
-                }
-                i++;
-            }
-            for(Customer newCustomer : newCustomers){
-                tmp[i] = newCustomer;
-            }
+        int size = this.customers.length + newCustomers.length; //기존 객체 배열 크기 + 새로운 객체 배열 크기 ( 새로운 객체 배열 크기만큼 확장하려고 )
+        Customer[] tmp = new Customer[size]; // 임시 객체 배열 생성
+        int i=0;
+        for(Customer origin : this.customers) { // 임시 객체 배열에 기존 객체 배열 데이터 부터 넣기
+            if (origin != null) tmp[i] = origin; //null 값말고 실제 데이터만 넣기
+            i++;
         }
+        for(Customer newCustomer : newCustomers){ // 임시 객체 배열에 새로 입력 받은 객체 배열 데이터 넣기
+            tmp[i] = newCustomer;
+            i++;
+        }
+        this.customers = tmp; // 기존 객체 배열 -> 확장된 객체 배열로 변경
     }
 
+    /**
+     * 기존 객체배열에 담긴 데이터의 개수를 세는 함수
+     * @return null이 아닌 데이터의 개수
+     */
     public int countNullObject(){
         int cnt = 0;
-        for(Customer c : this.customers){
+        for(Customer c : this.customers){ //null 이 아닌 데이터만 세기
             if(c == null) cnt++;
         }
         return cnt;
