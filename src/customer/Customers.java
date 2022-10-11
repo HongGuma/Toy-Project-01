@@ -213,6 +213,7 @@ public class Customers {
                     System.out.println("3. 스토어 이용 시간 수정");
                     System.out.println("4. 스토어 사용 금액 수정");
                     System.out.println("5. 종료");
+                    System.out.println("###############################");
                     System.out.print(">>");
                     String input = scanner.next();
                     int selectNum = numberException.exception(input);
@@ -225,7 +226,7 @@ public class Customers {
                                 System.out.print("수정할 이름 : ");
                                 String newName = scanner.next();
                                 if(newName.length() < 3){
-                                    System.out.println("3글자 이상");
+                                    System.out.println("3글자 이상 입력해주세요.");
                                 }else{
                                     customer.setCustomerName(newName);
                                     break;
@@ -238,7 +239,7 @@ public class Customers {
                                 System.out.print("수정할 아이디 : ");
                                 String newId = scanner.next();
                                 if(!Pattern.matches(ID_REGEX,newId)){
-                                    System.out.println("영문자, 4글자 이상");
+                                    System.out.println("영문자 및 숫자 조합으로 4글자 이상 입력해주세요.");
                                 }else{
                                     customer.setCustomerId(newId);
                                     break;
@@ -254,7 +255,7 @@ public class Customers {
                                     customer.setSpentTime(Integer.parseInt(newTime));
                                     break;
                                 }else{
-                                    System.out.println("숫자만 입력");
+                                    System.out.println("숫자만 입력해주세요.");
                                 }
                             }
                             break;
@@ -267,15 +268,17 @@ public class Customers {
                                     customer.setTotalPay(Integer.parseInt(newPay));
                                     break;
                                 }else{
-                                    System.out.println("숫자만 입력");
+                                    System.out.println("숫자만 입력해주세요.");
                                 }
                             }
                             break;
                         case 5:
-                            System.out.println("수정 완료");
+                            System.out.println("수정이 완료되었습니다.");
                             return;
                         default:
-                            System.out.println("메뉴에 있는 번호만 입력");
+                            System.out.println("『");
+                            System.out.println("    메뉴에 있는 번호만 입력해주세요.");
+                            System.out.println("                                 』");
                     }
                 }
             }
