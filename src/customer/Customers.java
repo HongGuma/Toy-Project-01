@@ -176,18 +176,30 @@ public class Customers {
     public void removeCustomer(){
         System.out.print("삭제할 고객의 아이디를 입력해주세요 >> ");
         String inputId = scanner.next();
-        //값을 삭제하고 뒤에 값들을 하나씩 앞으로 당기고 싶음 어캐 할까...
+        Customer[] tmp = new Customer[this.customers.length-1]; //한개 지울꺼라서 기존 객체 배열 크기 -1
+        int i=0;
+        int cnt=0; // 입력받은 아이디가 해당 객체 배열에 있는지 확인하는용
         for(Customer customer : this.customers){
             if(customer != null){
                 if(customer.getCustomerId().equals(inputId)){
-                    return; //1개 삭제하면 for문 더 돌지 않고 끝내기
+                    cnt++;
+                    continue;
                 }
+                tmp[i] = customer;
+                i++;
             }
         }
 
-        System.out.println("『");
-        System.out.println("    없는 아이디 입니다.");
-        System.out.println("                       』");
+        if(cnt == 0){
+            System.out.println("『");
+            System.out.println("    없는 아이디 입니다.");
+            System.out.println("                       』");
+        }else{
+            this.customers = tmp;
+            System.out.println("『");
+            System.out.println("    삭제가 완료 되었습니다.");
+            System.out.println("                       』");
+        }
     }
 
     /**
