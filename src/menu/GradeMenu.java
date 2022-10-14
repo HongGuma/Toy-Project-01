@@ -1,6 +1,7 @@
 package menu;
 
 import exception.InputNumberException;
+import grade.Groups;
 
 import java.util.Scanner;
 
@@ -14,7 +15,8 @@ public class GradeMenu {
     /**
      * 등급 분류 기준을 설정하는 메뉴를 출력하는 함수
      */
-    public void printGradeMenu(){
+    public void showGradeMenu(){
+        Groups groups = new Groups();
         while (true){
             System.out.println("********* 분류 기준 설정 **********");
             System.out.println("1. 분류 기준 설정하기");
@@ -30,13 +32,13 @@ public class GradeMenu {
 
             switch (inputNum){
                 case 1:
-                    System.out.println("분류 기준을 설정합니다.");
+                    groups.settingGrade();
                     break;
                 case 2:
-                    System.out.println("분류 기준을 확인합니다.");
+                    groups.showGrade();
                     break;
                 case 3:
-                    System.out.println("분류 기준을 수정합니다.");
+                    groups.editGrade();
                     break;
                 case 4:
                     System.out.println("『");

@@ -30,7 +30,7 @@ public class MainMenu {
 
             switch (inputNum){
                 case 1:
-                    gradeMenu.printGradeMenu();
+                    gradeMenu.showGradeMenu();
                     break;
                 case 2:
                     customerMenu.printCustomerMenu();
