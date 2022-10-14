@@ -16,32 +16,21 @@ public class Groups {
     static InputNumberException numberException = new InputNumberException();
 
     /**
-     * 기준값 설정시 하위 등급이 상위 등급 보다 큰 값을 가지는지, 상위 등급이 하위 등급보다 작은 값을 가지는지 판별하는 함수
-     * @param inputType 입력값이 spent time 인지 total pay 인지 (1이면 spent time, 2면 total pay)
-     * @param input 입력받은 값
-     * @param gradeType 등급이 general, vip, vvip 인지
-     * @return 기준값을 벗어나면 false 아니면 true
+     * 설정된 기준값을 출력하는 함수
      */
-    public boolean exceedGradeException(int inputType, int input, int gradeType){
-        //TODO: 값이 null 일 때 상황도 고려해야됨 ㅠㅠ
-        switch (gradeType){
-            case 1: //general : vip값보다 작아야 한다.
-                if(inputType == 1) //spent time
-                    return input < this.groups[gradeType+1].getSpentTime();
-                else //total pay
-                    return input < this.groups[gradeType+1].getTotalPay();
-            case 2: //vip : general 보다 커야하고 vvip 보다 작아야한다.
-                if(inputType == 1) //spent time
-                    return input > this.groups[gradeType-1].getSpentTime() && input < this.groups[gradeType+1].getSpentTime();
-                else //total pay
-                    return input > this.groups[gradeType-1].getTotalPay() && input < this.groups[gradeType+1].getTotalPay();
-            case 3: //vvip : vip 보다 크기만 하면 된다.
-                if(inputType == 1) //spent time
-                    return input > this.groups[gradeType-1].getSpentTime();
-                else //total pay
-                    return input > this.groups[gradeType-1].getTotalPay();
-            default:
-                return false;
+    public void showGrade(){
+        int cnt = 0; //출력 문구 띄우고 싶어서 사용함
+        for(Group group : this.groups){
+            if(group != null){
+                System.out.println(group.toString());
+                cnt++;
+            }
+        }
+        //아무 데이터가 없으면 출력
+        if(cnt == 0 ) {
+            System.out.println("『");
+            System.out.println("    설정한 기준값이 없습니다.");
+            System.out.println("                            』");
         }
     }
 
@@ -102,12 +91,16 @@ public class Groups {
                 else{
                     switch (gradeType){
                         case 0:
+                            System.out.println(this.groups[gradeType+1].getSpentTime());
                             System.out.println("VIP등급보다 낮아야합니다. 다시 설정해주세요.");
                             break;
                         case 1:
+                            System.out.println(this.groups[gradeType-1].getSpentTime());
+                            System.out.println(this.groups[gradeType+1].getSpentTime());
                             System.out.println("GENERAL 보다 높고 VVIP 보다 낮아야합니다. 다시 설정해주세요.");
                             break;
                         case 2:
+                            System.out.println(this.groups[gradeType-1].getSpentTime());
                             System.out.println("VIP 보다 높아야 합니다. 다시 설정해주세요.");
                     }
                 }
@@ -221,21 +214,50 @@ public class Groups {
     }
 
     /**
-     * 설정된 기준값을 출력하는 함수
+     * 기준값 설정시 하위 등급이 상위 등급 보다 큰 값을 가지는지, 상위 등급이 하위 등급보다 작은 값을 가지는지 판별하는 함수
+     * @param inputType 입력값이 spent time 인지 total pay 인지 (1이면 spent time, 2면 total pay)
+     * @param input 입력받은 값
+     * @param gradeType 등급이 general, vip, vvip 인지
+     * @return 기준값을 벗어나면 false 아니면 true
      */
-    public void showGrade(){
-        int cnt = 0; //출력 문구 띄우고 싶어서 사용함
-        for(Group group : this.groups){
-            if(group != null){
-                System.out.println(group.toString());
-                cnt++;
-            }
-        }
-        //아무 데이터가 없으면 출력
-        if(cnt == 0 ) {
-            System.out.println("『");
-            System.out.println("    설정한 기준값이 없습니다.");
-            System.out.println("                            』");
+    public boolean exceedGradeException(int inputType, int input, int gradeType){
+        switch (gradeType){
+            case 0: //general : vip값보다 작아야 한다.
+                if(this.groups[gradeType+1] == null) return true; //vip 가 null 이면 아무값이나 설정 가능
+                if(inputType == 1) { //spent time
+                    return input < this.groups[gradeType + 1].getSpentTime();
+                }else //total pay
+                    return input < this.groups[gradeType+1].getTotalPay();
+
+            case 1: //vip : general 보다 커야하고 vvip 보다 작아야한다.
+                if(this.groups[gradeType+1] == null && this.groups[gradeType-1] == null) {
+                    //vvip, general 둘다 null 일 때 (아무 값이나 입력하면 된다.)
+                    return true;
+                }else if(this.groups[gradeType+1] == null){
+                    //vvip만 null 일 때 (general 보다 크면 된다.)
+                    if(input == 1) return input > this.groups[gradeType-1].getSpentTime();
+                    else return input > this.groups[gradeType-1].getTotalPay();
+                }else if(this.groups[gradeType-1] == null) {
+                    //general 만 null 일 때 (vvip 보다 작으면 된다.)
+                    if(input == 1) return input < this.groups[gradeType+1].getSpentTime();
+                    else return input < this.groups[gradeType+1].getTotalPay();
+                }else {
+                    //둘다 null이 아닐때 (general 보다 크고 vvip 보다 작아야한다.)
+                    if(inputType == 1) return input < this.groups[gradeType+1].getSpentTime() && input > this.groups[gradeType-1].getSpentTime();
+                    else return input < this.groups[gradeType+1].getTotalPay() && input > this.groups[gradeType-1].getTotalPay();
+                }
+
+            case 2: //vvip : vip 보다 크기만 하면 된다.
+                if(this.groups[gradeType-1] == null) return  true; //vip 가 null 이면 아무값이나 입력 가능
+                if(inputType == 1) //spent time
+                    return input > this.groups[gradeType-1].getSpentTime();
+                else //total pay
+                    return input > this.groups[gradeType-1].getTotalPay();
+
+            default:
+                return false;
         }
     }
+
+
 }
