@@ -47,14 +47,14 @@ public class Groups {
             System.out.println("--------------------------------");
             System.out.print(">> ");
 
-            String input = scanner.next();
-            int inputNum = numberException.exception(input);
-            if(inputNum == -1) continue;
+            String input = scanner.next(); //입력받기
+            int inputNum = numberException.exception(input); //숫자만 입력받기 (문자열 입력시 예외처리함)
+            if(inputNum == -1) continue; //문자열이 들어오면 -1를 반환한다. 그래서 -1이면 처음으로 돌아감.
 
-            if(inputNum >= 1 && inputNum <= 4){
-                if(inputNum == 4 ) return;
-                if(this.groups[inputNum-1] == null){
-                    Group newGroup = inputGrade(inputNum-1);
+            if(inputNum >= 1 && inputNum <= 4){ //메뉴에 있는 번호
+                if(inputNum == 4 ) return; //4번이면 종료
+                if(this.groups[inputNum-1] == null){ //설정하려는 등급이 null 때만 입력을 받는다.
+                    Group newGroup = inputGrade(inputNum-1); //입력받는 함수
                     this.groups[inputNum-1] = newGroup;
                 }else{
                     System.out.println("『");
@@ -76,6 +76,7 @@ public class Groups {
      * @return 새로 생성한 Group 객체
      */
     public Group inputGrade(int gradeType){
+        //TODO: 입력받을때 뒤로가기 기능 만들기 (굳이? 필요하면 만드셈)
         String input = ""; // 입력값
         int spentTime = 0; //스토어 이용 시간
         int totalPay = 0; //스토어 이용 금액
@@ -86,14 +87,15 @@ public class Groups {
             input = scanner.next();
             spentTime = numberException.exception(input); //입력값이 숫자인지 판단
             if(spentTime != -1){ // -1
-                if(exceedGradeException(1,spentTime,gradeType)) break;
-                else{
+                if(exceedGradeException(1,spentTime,gradeType)) break; //입력값이 등급 범위에 맞는지 판단
+                else{ //등급 범위에 맞지 않으면
                     switch (gradeType){
-                        case 0:
+                        case 0: //general
                             System.out.println("VIP등급보다 낮아야합니다. 다시 설정해주세요.");
                             System.out.println("VIP : "+this.groups[gradeType+1].getSpentTime());
                             break;
-                        case 1:
+
+                        case 1: //vip
                             System.out.println(exceedGradeException(1,spentTime,gradeType));
                             System.out.println("GENERAL 보다 높고 VVIP 보다 낮아야합니다. 다시 설정해주세요.");
                             if(this.groups[gradeType-1] !=null)
@@ -101,7 +103,8 @@ public class Groups {
                             if(this.groups[gradeType+1] != null)
                                 System.out.println("VVIP : "+this.groups[gradeType+1].getSpentTime());
                             break;
-                        case 2:
+
+                        case 2: //vvip
                             System.out.println("VIP 보다 높아야 합니다. 다시 설정해주세요.");
                             System.out.println("VIP : "+this.groups[gradeType-1].getSpentTime());
                     }
@@ -122,6 +125,7 @@ public class Groups {
                             System.out.println("VIP등급보다 낮아야합니다. 다시 설정해주세요.");
                             System.out.println("VIP : "+this.groups[gradeType+1].getTotalPay());
                             break;
+
                         case 1:
                             System.out.println("GENERAL 보다 높고 VVIP 보다 낮아야합니다. 다시 설정해주세요.");
                             if(this.groups[gradeType-1] !=null)
@@ -129,6 +133,7 @@ public class Groups {
                             if(this.groups[gradeType+1] != null)
                                 System.out.println("VVIP : "+this.groups[gradeType+1].getTotalPay());
                             break;
+
                         case 2:
                             System.out.println("VIP 보다 높아야 합니다. 다시 설정해주세요.");
                             System.out.println("VIP : "+this.groups[gradeType-1].getTotalPay());
@@ -166,53 +171,6 @@ public class Groups {
                 }else{
                     System.out.println("설정된 스토어 이용 시간 : "+this.groups[gradeType-1].getSpentTime());
                     System.out.println("설정된 사용 금액 : "+this.groups[gradeType-1].getTotalPay());
-                    /*int newSpentTime = 0;
-                    int newTotalPay = 0;
-
-                    while(true){
-                        System.out.printf("수정할 스토어 이용 시간 : ");
-                        input = scanner.next();
-                        newSpentTime = numberException.exception(input);
-                        if(newSpentTime != -1){
-                            if(exceedGradeException(1,newSpentTime,gradeType-1)) break;
-                            else{
-                                switch (gradeType-1){
-                                    case 0:
-                                        System.out.println("VIP등급보다 낮아야합니다. 다시 설정해주세요.");
-                                        break;
-                                    case 1:
-                                        System.out.println("GENERAL 보다 높고 VVIP 보다 낮아야합니다. 다시 설정해주세요.");
-                                        break;
-                                    case 2:
-                                        System.out.println("VIP 보다 높아야 합니다. 다시 설정해주세요.");
-                                }
-                            }
-                        }
-                    }
-                    this.groups[gradeType-1].setSpentTime(newSpentTime);
-
-
-                    while (true){
-                        System.out.print("수정할 사용 금액 : ");
-                        input = scanner.next();
-                        newTotalPay = numberException.exception(input);
-                        if(newTotalPay != -1){
-                            if(exceedGradeException(2,newTotalPay,gradeType)) break;
-                            else{
-                                switch (gradeType){
-                                    case 0:
-                                        System.out.println("VIP등급보다 낮아야합니다. 다시 설정해주세요.");
-                                        break;
-                                    case 1:
-                                        System.out.println("GENERAL 보다 높고 VVIP 보다 낮아야합니다. 다시 설정해주세요.");
-                                        break;
-                                    case 2:
-                                        System.out.println("VIP 보다 높아야 합니다. 다시 설정해주세요.");
-                                }
-                            }
-                        }
-                    }
-                    this.groups[gradeType-1].setTotalPay(newTotalPay);*/
                     Group newGroup = inputGrade(gradeType-1);
                     this.groups[gradeType-1] = newGroup;
 
@@ -220,7 +178,6 @@ public class Groups {
                     System.out.println("    수정이 완료되었습니다.");
                     System.out.println("                          』");
                 }
-
             }else{
                 System.out.println("『");
                 System.out.println("    메뉴에 있는 번호만 선택해주세요.");
@@ -253,13 +210,17 @@ public class Groups {
 
                 //vvip만 null 일 때 (general 보다 크면 된다.)
                 }else if(this.groups[gradeType-1] != null && this.groups[gradeType+1] == null){
+//                    System.out.println("case2"); //디버깅용
+//                    System.out.println("input="+input);
+//                    System.out.println("general = "+this.groups[gradeType-1]);
                     if(input == 1)
-                        return input > this.groups[gradeType-1].getSpentTime();
+                        return input > this.groups[gradeType - 1].getSpentTime();
                     else
-                        return input > this.groups[gradeType-1].getTotalPay();
+                        return input > this.groups[gradeType - 1].getTotalPay();
+
 
                 //general 만 null 일 때 (vvip 보다 작으면 된다.)
-                }else if(this.groups[gradeType-1] == null && this.groups[gradeType+1] != null) {
+                }else if(this.groups[gradeType - 1] == null) {
                     if(input == 1)
                         return input < this.groups[gradeType+1].getSpentTime();
                     else
