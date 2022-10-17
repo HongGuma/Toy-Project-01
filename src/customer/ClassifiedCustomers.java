@@ -10,14 +10,14 @@ public class ClassifiedCustomers {
     public ClassifiedCustomers(Customers customers, Groups groups){
         this.customers = customers.getCustomers();
         this.groups = groups.getGroups();
-        this.classifiedCustomers = new Customers[this.groups.length];
+        this.classifiedCustomers = new Customers[Grade.values().length];
     }
 
     public void show(){
         int i=0;
         for(Customers customers1 : classifiedCustomers){
             System.out.println("[["+Grade.values()[i]+"]]");
-            if(customers1 != null){
+            if(customers1 != null && customers1.getCustomers().length > 0){
                 for(Customer customer : customers1.getCustomers()){
                     System.out.println(customer.toString());
                 }
@@ -53,13 +53,13 @@ public class ClassifiedCustomers {
                     case -1:
                         customer.setGrade(Grade.NONE);
                         break;
-                    default: //TODO: default 값 생각해보기
-                        System.out.println("에러...?");
+                    default:
+                        System.out.println("error");
                 }
             }
         }
 
-        for(int num = 0; num<this.groups.length; num++){
+        for(int num = 0; num<Grade.values().length; num++){
             int cnt = 0;
 
             for(Customer customer : this.customers){
@@ -81,7 +81,7 @@ public class ClassifiedCustomers {
             }
 
             classifiedCustomers[num] = new Customers(tmp);
-            num++;
+
         }
 
 
