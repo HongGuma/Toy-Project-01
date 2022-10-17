@@ -2,34 +2,41 @@ package customer;
 
 import grade.*;
 
-import java.util.Arrays;
-
-public class ClassifiedCustomer {
+public class ClassifiedCustomers {
     private Customers[] classifiedCustomers;
     private Customer[] customers;
     private Group[] groups;
 
-    public ClassifiedCustomer(){
-        this.customers = new Customers().getCustomers();
-        this.groups = new Groups().getGroups();
+    public ClassifiedCustomers(Customers customers, Groups groups){
+        this.customers = customers.getCustomers();
+        this.groups = groups.getGroups();
+        this.classifiedCustomers = new Customers[this.groups.length];
     }
 
     public void show(){
+        int i=0;
         for(Customers customers1 : classifiedCustomers){
+            System.out.println("[["+Grade.values()[i]+"]]");
             if(customers1 != null){
-                System.out.println(customers1.getCustomers());
+                for(Customer customer : customers1.getCustomers()){
+                    System.out.println(customer.toString());
+                }
+            }else{
+                System.out.println("null");
             }
+            i++;
         }
     }
 
 
     public void setDefault(){
-        for(Group group : this.groups){
+        for(Group  group : this.groups){
             if(group == null){
                 System.out.println("등급을 먼저 설정해주세요.");
                 return;
             }
         }
+
         //customer 등급 설정하기
         for(Customer customer : this.customers){
             if(customer != null){
@@ -52,30 +59,34 @@ public class ClassifiedCustomer {
             }
         }
 
-        int num = 0;
-        for(Group group : this.groups){
+        for(int num = 0; num<this.groups.length; num++){
             int cnt = 0;
 
             for(Customer customer : this.customers){
-                if(customer.getGrade() == Grade.GENERAL) cnt++;
+                if(customer != null ) {
+                    if (customer.getGrade().equals(Grade.values()[num]))
+                        cnt++;
+                }
             }
 
             Customer[] tmp = new Customer[cnt];
             int i=0;
             for(Customer customer : this.customers){
-                if(customer.getGrade() == Grade.GENERAL){
-                    tmp[i] = customer;
-                    i++;
+                if(customer != null){
+                    if(customer.getGrade().equals(Grade.values()[num])){
+                        tmp[i] = customer;
+                        i++;
+                    }
                 }
             }
 
             classifiedCustomers[num] = new Customers(tmp);
             num++;
-
         }
 
-        show();
 
+
+        show();
     }
 
     /**
@@ -89,15 +100,22 @@ public class ClassifiedCustomer {
         Group general = this.groups[0]; // general group 객체
         Group vip = this.groups[1]; // vip group 객체
         Group vvip = this.groups[2]; // vvip group 객체
-        if(spentTime >= general.getSpentTime() && totalPay >= general.getTotalPay()){ //고객의 데이터가 general 이상인가?
-            if(spentTime >= vip.getSpentTime() && totalPay >= vip.getTotalPay()){ //고객의 데이터가 vip 이상인가?
-                if(spentTime >= vvip.getSpentTime() && totalPay >= vvip.getTotalPay()) //고객의 데이터가 vvip 이상인가?
+
+        //고객의 데이터가 general 이상인가?
+        if(spentTime >= general.getSpentTime() && totalPay >= general.getTotalPay()){
+            //고객의 데이터가 vip 이상인가?
+            if(spentTime >= vip.getSpentTime() && totalPay >= vip.getTotalPay()){
+                //고객의 데이터가 vvip 이상인가?
+                if(spentTime >= vvip.getSpentTime() && totalPay >= vvip.getTotalPay())
                     return 2; //vvip
-                else //vvip 보다 작고 vip 보다 크다는 뜻임으로
+                //vvip 보다 작고 vip 보다 크다는 뜻임으로
+                else
                     return 1; //vip
-            }else //general 보다 크고 vip 보다 작다는 뜻임으로
+            //general 보다 크고 vip 보다 작다는 뜻임으로
+            }else
                 return 0; //general
-        }else //general 보다 작으면
+        //general 보다 작으면
+        }else
             return -1; //none
     }
 

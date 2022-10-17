@@ -1,7 +1,6 @@
 package menu;
 
-import customer.ClassifiedCustomer;
-import customer.Customer;
+import customer.ClassifiedCustomers;
 import customer.Customers;
 import exception.InputNumberException;
 import grade.Groups;
@@ -16,9 +15,9 @@ public class MainMenu {
     static Scanner scanner = new Scanner(System.in);
     static InputNumberException numberException = new InputNumberException();
     public void printMainMenu(){
-        ClassifiedCustomer classifiedCustomer = new ClassifiedCustomer();
         Customers customers = new Customers();
         Groups groups = new Groups();
+        ClassifiedCustomers classifiedCustomer = new ClassifiedCustomers(customers,groups);
 
         GradeMenu gradeMenu = new GradeMenu();
         CustomerMenu customerMenu = new CustomerMenu();

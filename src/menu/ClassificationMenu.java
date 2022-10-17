@@ -1,6 +1,6 @@
 package menu;
 
-import customer.ClassifiedCustomer;
+import customer.ClassifiedCustomers;
 import exception.InputNumberException;
 
 import java.util.Scanner;
@@ -15,7 +15,7 @@ public class ClassificationMenu {
     /**
      * 고객을 등급별로 분류하는 메뉴를 출력하는 함수
      */
-    public void printClassificationMenu(ClassifiedCustomer classifiedCustomer){
+    public void printClassificationMenu(ClassifiedCustomers classifiedCustomer){
 
         while (true){
             System.out.println("+++++++++++ 등급별 분류 +++++++++++");

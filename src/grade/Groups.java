@@ -10,6 +10,17 @@ public class Groups {
 
     public Groups(){
         this.groups = new Group[3];
+        test();
+    }
+
+    public Groups(Group[] groups){
+        this.groups = groups;
+    }
+
+    public void test(){
+        this.groups[0] = new Group(Grade.GENERAL,10,1000);
+        this.groups[1] = new Group(Grade.VIP,30,3000);
+        this.groups[2] = new Group(Grade.VVIP, 50, 5000);
     }
 
     static Scanner scanner = new Scanner(System.in);
