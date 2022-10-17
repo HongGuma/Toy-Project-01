@@ -1,5 +1,5 @@
 package grade;
 
 public enum Grade {
-    GENERAL, VIP, VVIP
+    GENERAL, VIP, VVIP, NONE;
 }

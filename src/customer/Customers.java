@@ -9,12 +9,28 @@ public class Customers {
 
     private Customer[] customers;
     private final String ID_REGEX = "^[a-zA-Z0-9_-]{4,}$"; //아이디 정규표현식 (영문자 4자 이상만 가능)
+    static Scanner scanner = new Scanner(System.in); //scanner
+    static InputNumberException numberException = new InputNumberException(); //숫자만 입력받기
 
     public Customers(){
         this.customers = new Customer[10];
-        customers[0] = new Customer("김철수","kim123",32,120000);
-        customers[1] = new Customer("이영희","lee123",20,300000);
-        customers[2] = new Customer("박문대","park1234",3,5000);
+        test(); //테스트값
+    }
+
+    public Customers(Customer[] customers){
+        this.customers = customers;
+    }
+
+    /**
+     * 테스트용 데이터 생성 함수
+     */
+    public void test(){
+        for(int i=0; i<8; i++){
+            customers[i] = new Customer("tester"+i,"tester"+i,
+                    (int) ((Math.random() * 10 + 1) * 10 + (Math.random() * 10 + 1)),
+                    (int) ( ((Math.random()*10+1) * 1000) + ((Math.random() * 10 + 1) * 100) )
+            );
+        }
     }
 
    /* public Customers(int size){
@@ -24,8 +40,9 @@ public class Customers {
         }
     }*/
 
-    static Scanner scanner = new Scanner(System.in);
-    static InputNumberException numberException = new InputNumberException();
+    public Customer[] getCustomers(){
+        return this.customers;
+    }
 
     /**
      * 고객의 데이터를 추가하는 함수
@@ -67,6 +84,7 @@ public class Customers {
     public Customer[] inputCustomerInfo(int num){
         //TODO : 아이디 입력시 중복 체크? 기능 추가하기?
         //TODO : 입력받을때 예외 상황이 발생하면 처음부터 돌아가는거 수정하기
+        //TODO: 문자 잘못 입력해도 처음으로 안돌아감.(bug)
         Customer[] insertCustomers = new Customer[num]; //입력받은 수 만큼 Customer 객체 배열 생성
         String name = ""; //입력받을 사용자 이름
         String id = ""; //입력받을 사용자 아이디
@@ -205,6 +223,7 @@ public class Customers {
      * 고객정보 수정하는 함수
      */
     public void editCustomer(){
+        //TODO: 입력받는 코드 inputCustomerInfo로 합치기
         System.out.print("수정할 고객의 아이디를 입력해주세요 >> ");
         String inputId = scanner.next();
         for(Customer customer : this.customers){

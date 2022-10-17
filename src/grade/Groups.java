@@ -15,6 +15,10 @@ public class Groups {
     static Scanner scanner = new Scanner(System.in);
     static InputNumberException numberException = new InputNumberException();
 
+    public Group[] getGroups(){
+        return this.groups;
+    }
+
     /**
      * 설정된 기준값을 출력하는 함수
      */

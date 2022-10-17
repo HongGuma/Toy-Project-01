@@ -1,6 +1,8 @@
 package customer;
 
 
+import grade.Grade;
+
 public class Customer {
     public static int serial = 0;
     protected int customerSerialNum;
@@ -8,6 +10,8 @@ public class Customer {
     protected String customerId;
     protected int spentTime;
     protected int totalPay;
+
+    protected Grade grade;
 
 
 
@@ -65,6 +69,13 @@ public class Customer {
     }
     public void setTotalPay(int totalPay) {
         this.totalPay = totalPay;
+    }
+
+    public Grade getGrade() {
+        return grade;
+    }
+    public void setGrade(Grade grade) {
+        this.grade = grade;
     }
 
     @Override
