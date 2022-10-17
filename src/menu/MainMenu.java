@@ -1,6 +1,10 @@
 package menu;
 
+import customer.ClassifiedCustomer;
+import customer.Customer;
+import customer.Customers;
 import exception.InputNumberException;
+import grade.Groups;
 
 import java.util.Scanner;
 
@@ -12,6 +16,10 @@ public class MainMenu {
     static Scanner scanner = new Scanner(System.in);
     static InputNumberException numberException = new InputNumberException();
     public void printMainMenu(){
+        ClassifiedCustomer classifiedCustomer = new ClassifiedCustomer();
+        Customers customers = new Customers();
+        Groups groups = new Groups();
+
         GradeMenu gradeMenu = new GradeMenu();
         CustomerMenu customerMenu = new CustomerMenu();
         ClassificationMenu classificationMenu = new ClassificationMenu();
@@ -30,13 +38,13 @@ public class MainMenu {
 
             switch (inputNum){
                 case 1:
-                    gradeMenu.showGradeMenu();
+                    gradeMenu.showGradeMenu(groups);
                     break;
                 case 2:
-                    customerMenu.printCustomerMenu();
+                    customerMenu.printCustomerMenu(customers);
                     break;
                 case 3:
-                    classificationMenu.printClassificationMenu();
+                    classificationMenu.printClassificationMenu(classifiedCustomer);
                     break;
                 case 4:
                     System.out.println("종료합니다.");

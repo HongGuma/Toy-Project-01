@@ -15,8 +15,8 @@ public class GradeMenu {
     /**
      * 등급 분류 기준을 설정하는 메뉴를 출력하는 함수
      */
-    public void showGradeMenu(){
-        Groups groups = new Groups();
+    public void showGradeMenu(Groups groups){
+
         while (true){
             System.out.println("********* 분류 기준 설정 **********");
             System.out.println("1. 분류 기준 설정하기");

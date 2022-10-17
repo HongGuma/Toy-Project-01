@@ -12,9 +12,9 @@ import java.util.Scanner;
 public class CustomerMenu {
     static Scanner scanner = new Scanner(System.in);
     static InputNumberException numberException = new InputNumberException();
-    public void printCustomerMenu(){
+    public void printCustomerMenu(Customers customers){
 
-        Customers customers = new Customers();
+
         while (true){
             System.out.println("########### 고객 정보 ###########");
             System.out.println("1. 고객 정보 추가하기");
