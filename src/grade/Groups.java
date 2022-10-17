@@ -100,7 +100,6 @@ public class Groups {
                             break;
 
                         case 1: //vip
-                            System.out.println(exceedGradeException(1,spentTime,gradeType));
                             System.out.println("GENERAL 보다 높고 VVIP 보다 낮아야합니다. 다시 설정해주세요.");
                             if(this.groups[gradeType-1] !=null)
                                 System.out.println("GENERAL : "+this.groups[gradeType-1].getSpentTime());
@@ -199,54 +198,83 @@ public class Groups {
      * @return 기준값을 벗어나면 false 아니면 true
      */
     public boolean exceedGradeException(int inputType, int input, int gradeType){
-        switch (gradeType){
-            case 0: //general : vip값보다 작아야 한다.
-                if(this.groups[gradeType+1] == null) return true; //vip 가 null 이면 아무값이나 설정 가능
-                if(inputType == 1) { //spent time
-                    return input < this.groups[gradeType + 1].getSpentTime();
-                }else //total pay
-                    return input < this.groups[gradeType+1].getTotalPay();
 
-            case 1: //vip : general 보다 커야하고 vvip 보다 작아야한다.
-                //vvip, general 둘다 null 일 때 (아무 값이나 입력하면 된다.)
-                if(this.groups[gradeType+1] == null && this.groups[gradeType-1] == null) {
-                    return true;
+        if(inputType == 1){ //spent time
+            switch (gradeType){
+                case 0: //general
+                    //vip가 null 일때
+                    if(this.groups[gradeType+1] == null){
+                        //vvip도 null 이라면 true
+                        if(this.groups[gradeType+2] == null) return true;
+                        //vvip가 null이 아니라면 vvip보다 작은 값을 입력해야한다. (input이 vvip보다 작으면 true)
+                        else return input < this.groups[gradeType + 2].getSpentTime();
+                    //vip가 null이 아닐때
+                    }else return input < this.groups[gradeType + 1].getSpentTime();
 
-                //vvip만 null 일 때 (general 보다 크면 된다.)
-                }else if(this.groups[gradeType-1] != null && this.groups[gradeType+1] == null){
-//                    System.out.println("case2"); //디버깅용
-//                    System.out.println("input="+input);
-//                    System.out.println("general = "+this.groups[gradeType-1]);
-                    if(input == 1)
-                        return input > this.groups[gradeType - 1].getSpentTime();
-                    else
-                        return input > this.groups[gradeType - 1].getTotalPay();
-
-
-                //general 만 null 일 때 (vvip 보다 작으면 된다.)
-                }else if(this.groups[gradeType - 1] == null) {
-                    if(input == 1)
+                case 1: //vip
+                    // general, vvip가 모두 null 일 때
+                    if(this.groups[gradeType-1] == null && this.groups[gradeType+1] == null)
+                        return true;
+                    // vvip만 null 일 때
+                    else if(this.groups[gradeType-1] != null && this.groups[gradeType+1] == null)
+                        return input > this.groups[gradeType-1].getSpentTime();
+                    // general만 null 일 때
+                    else if(this.groups[gradeType-1] == null && this.groups[gradeType+1] != null)
                         return input < this.groups[gradeType+1].getSpentTime();
+                    // 둘다 null이 아닐 때
                     else
+                        return input > this.groups[gradeType-1].getSpentTime() && input < this.groups[gradeType+1].getSpentTime();
+
+                case 2: //vvip
+                    //vip가 null 일 때
+                    if(this.groups[gradeType-1] == null){
+                        // general도 null 이라면 true
+                        if(this.groups[gradeType-2] == null) return true;
+                        // null이 아니라면 general보다 커야 true
+                        else return input > this.groups[gradeType-2].getSpentTime();
+                    //vip가 null이 아니라면 vip보다 커야 true
+                    }else return input > this.groups[gradeType-1].getSpentTime();
+
+                default: return false;
+            }
+        }else{ //total pay
+            switch (gradeType){
+                case 0: //general
+                    //vip가 null 일때
+                    if(this.groups[gradeType+1] == null){
+                        //vvip도 null 이라면 true
+                        if(this.groups[gradeType+2] == null) return true;
+                            //vvip가 null이 아니라면 vvip보다 작은 값을 입력해야한다. (input이 vvip보다 작으면 true)
+                        else return input < this.groups[gradeType + 2].getTotalPay();
+                        //vip가 null이 아닐때
+                    }else return input < this.groups[gradeType + 1].getTotalPay();
+
+                case 1: //vip
+                    // general, vvip가 모두 null 일 때
+                    if(this.groups[gradeType-1] == null && this.groups[gradeType+1] == null)
+                        return true;
+                        // vvip만 null 일 때
+                    else if(this.groups[gradeType-1] != null && this.groups[gradeType+1] == null)
+                        return input > this.groups[gradeType-1].getTotalPay();
+                        // general만 null 일 때
+                    else if(this.groups[gradeType-1] == null && this.groups[gradeType+1] != null)
                         return input < this.groups[gradeType+1].getTotalPay();
-
-                //둘다 null이 아닐때 (general 보다 크고 vvip 보다 작아야한다.)
-                }else {
-                    if(inputType == 1)
-                        return input < this.groups[gradeType+1].getSpentTime() && input > this.groups[gradeType-1].getSpentTime();
+                        // 둘다 null이 아닐 때
                     else
-                        return input < this.groups[gradeType+1].getTotalPay() && input > this.groups[gradeType-1].getTotalPay();
-                }
+                        return input > this.groups[gradeType-1].getTotalPay() && input < this.groups[gradeType+1].getTotalPay();
 
-            case 2: //vvip : vip 보다 크기만 하면 된다.
-                if(this.groups[gradeType-1] == null) return  true; //vip 가 null 이면 아무값이나 입력 가능
-                if(inputType == 1) //spent time
-                    return input > this.groups[gradeType-1].getSpentTime();
-                else //total pay
-                    return input > this.groups[gradeType-1].getTotalPay();
+                case 2: //vvip
+                    //vip가 null 일 때
+                    if(this.groups[gradeType-1] == null){
+                        // general도 null 이라면 true
+                        if(this.groups[gradeType-2] == null) return true;
+                            // null이 아니라면 general보다 커야 true
+                        else return input > this.groups[gradeType-2].getTotalPay();
+                        //vip가 null이 아니라면 vip보다 커야 true
+                    }else return input > this.groups[gradeType-1].getTotalPay();
 
-            default:
-                return false;
+                default: return false;
+            }
         }
     }
 
