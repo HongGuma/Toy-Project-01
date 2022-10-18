@@ -1,11 +1,17 @@
 package customer;
 
+import exception.InputNumberException;
 import grade.*;
+
+import java.util.Scanner;
 
 public class ClassifiedCustomers {
     private Customers[] classifiedCustomers;
     private Customer[] customers;
     private Group[] groups;
+
+    static Scanner scanner = new Scanner(System.in);
+    static InputNumberException numberException = new InputNumberException(); //숫자만 입력받기
 
     public ClassifiedCustomers(Customers customers, Groups groups){
         this.customers = customers.getCustomers();
@@ -13,6 +19,9 @@ public class ClassifiedCustomers {
         this.classifiedCustomers = new Customers[Grade.values().length];
     }
 
+    /**
+     * 분류된 객체들을 출력하는 함수
+     */
     public void show(){
         int i=0;
         for(Customers customers1 : classifiedCustomers){
@@ -28,7 +37,9 @@ public class ClassifiedCustomers {
         }
     }
 
-
+    /**
+     * 제일 기본 분류 (등급만으로만 분류되어 있음 정렬 X)
+     */
     public void setDefault(){
         for(Group  group : this.groups){
             if(group == null){
@@ -79,14 +90,9 @@ public class ClassifiedCustomers {
                     }
                 }
             }
-
             classifiedCustomers[num] = new Customers(tmp);
 
         }
-
-
-
-        show();
     }
 
     /**
@@ -119,13 +125,78 @@ public class ClassifiedCustomers {
             return -1; //none
     }
 
-    public void setByName(){
+    public int selectSortMenu(){
+        System.out.println("1.오름 차순");
+        System.out.println("2.내림 차순");
+        System.out.println("3.뒤로 가기");
+        String input = scanner.next();
+        int menu = numberException.exception(input);
 
+        return menu;
+    }
+
+    /**
+     * 분류된 상태에서 이름순으로 정렬
+     */
+    public void setByName(){
+        if(classifiedCustomers[0] == null)
+            setDefault();
+        while(true){
+            int menu = selectSortMenu();
+            if(menu == 3) return;
+            if(menu == 1){ //오름차순
+                for (Customers classifiedCustomer : classifiedCustomers) {
+                    Customer[] tmp = sortASC(classifiedCustomer.getCustomers());
+                    classifiedCustomer.setCustomers(tmp);
+                }
+                show();
+            }else if(menu == 2){ //내림차순
+                for(Customers classifiedCustomer : classifiedCustomers){
+                    Customer[] tmp = sortDESC(classifiedCustomer.getCustomers());
+                    classifiedCustomer.setCustomers(tmp);
+                }
+                show();
+            }else{
+                System.out.println("메뉴에 있는 번호만 입력해주세요.");
+            }
+        }
+
+    }
+
+    //오름차순
+    public Customer[] sortASC(Customer[] customers){
+        Customer[] tmps = customers;
+        for(int i=0; i<tmps.length; i++){
+            for(int j=i; j<tmps.length; j++){
+                if(tmps[i].getCustomerName().compareTo(tmps[j].getCustomerName()) > 0){
+                    Customer tmp = tmps[i];
+                    tmps[i] = tmps[j];
+                    tmps[j] = tmp;
+                }
+            }
+        }
+        return tmps;
+    }
+
+    //내림차순
+    public Customer[] sortDESC(Customer[] customers){
+        Customer[] tmps = customers;
+        for(int i=0; i<tmps.length; i++){
+            for(int j=i; j<tmps.length; j++){
+                if(tmps[i].getCustomerName().compareTo(tmps[j].getCustomerName()) < 0){
+                    Customer tmp = tmps[i];
+                    tmps[i] = tmps[j];
+                    tmps[j] = tmp;
+                }
+            }
+        }
+        return tmps;
     }
 
     public void setBySpentTime(){
 
     }
+
 
     public void setByTotalPay(){
 

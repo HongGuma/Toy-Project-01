@@ -36,6 +36,9 @@ public class Customers {
     public Customer[] getCustomers(){
         return this.customers;
     }
+    public void setCustomers(Customer[] customers){
+        this.customers = customers;
+    }
 
     /**
      * 고객의 데이터를 추가하는 함수

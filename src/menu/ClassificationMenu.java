@@ -34,6 +34,7 @@ public class ClassificationMenu {
             switch (inputNum){
                 case 1:
                     classifiedCustomer.setDefault();
+                    classifiedCustomer.show();
                     break;
                 case 2:
                     classifiedCustomer.setByName();
