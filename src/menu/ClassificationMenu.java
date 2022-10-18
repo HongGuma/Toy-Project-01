@@ -37,13 +37,9 @@ public class ClassificationMenu {
                     classifiedCustomer.show();
                     break;
                 case 2:
-                    classifiedCustomer.setByName();
-                    break;
                 case 3:
-                    classifiedCustomer.setBySpentTime();
-                    break;
                 case 4:
-                    classifiedCustomer.setByTotalPay();
+                    classifiedCustomer.sort(inputNum);
                     break;
                 case 5:
                     System.out.println("『");
@@ -51,9 +47,7 @@ public class ClassificationMenu {
                     System.out.println("                           』");
                     return;
                 default:
-                    System.out.println("『");
-                    System.out.println("    잘못된 입력입니다. 메뉴에 있는 숫자만 입력해주세요.");
-                    System.out.println("                                                  』");
+
             }
         }
     }
