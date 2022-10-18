@@ -86,6 +86,7 @@ public class Customer {
                 ", customerId='" + customerId + '\'' +
                 ", spentTime=" + spentTime +
                 ", totalPay=" + totalPay +
+                ", grade=" +grade +
                 '}';
     }
 }

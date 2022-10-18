@@ -33,15 +33,11 @@ public class Customers {
         }
     }
 
-   /* public Customers(int size){
-        Customer[] newCustomers = new Customer[size+10];
-        for(int i=0; i<this.customers.length; i++){
-            newCustomers[i] = this.customers[i];
-        }
-    }*/
-
     public Customer[] getCustomers(){
         return this.customers;
+    }
+    public void setCustomers(Customer[] customers){
+        this.customers = customers;
     }
 
     /**
