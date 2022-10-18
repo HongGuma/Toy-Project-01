@@ -12,8 +12,10 @@ import java.util.Scanner;
 public class GradeMenu {
     static Scanner scanner = new Scanner(System.in);
     static InputNumberException numberException = new InputNumberException();
+
     /**
-     * 등급 분류 기준을 설정하는 메뉴를 출력하는 함수
+     * 등급 분류 기준을 설정하고 수정하고 확인하는 메뉴
+     * @param groups : MainMenu에서 생성한 객체
      */
     public void showGradeMenu(Groups groups){
 
@@ -27,7 +29,7 @@ public class GradeMenu {
             System.out.print(">>");
 
             String input = scanner.next();
-            int inputNum = numberException.exception(input);
+            int inputNum = numberException.exception(input); //숫자가 아니면 -1 리턴
             if(inputNum == -1) continue;
 
             switch (inputNum){

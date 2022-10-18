@@ -5,26 +5,37 @@ import exception.InputNumberException;
 
 import java.util.Scanner;
 
+/**
+ * @author 홍수희
+ * Group 객체 배열을 저장하는 객체
+ * 객체 값 입력, 수정, 확인을 할 수 있음
+ */
 public class Groups {
     private Group[] groups;
 
+    /**
+     * Groups 생성자
+     */
     public Groups(){
         this.groups = new Group[3];
-        test();
+        test(); //test값 생성
     }
 
     public Groups(Group[] groups){
         this.groups = groups;
     }
 
+    /**
+     * test값 생성하는 함수
+     */
     public void test(){
         this.groups[0] = new Group(Grade.GENERAL,10,1000);
         this.groups[1] = new Group(Grade.VIP,30,3000);
         this.groups[2] = new Group(Grade.VVIP, 50, 5000);
     }
 
-    static Scanner scanner = new Scanner(System.in);
-    static InputNumberException numberException = new InputNumberException();
+    static Scanner scanner = new Scanner(System.in); //scanner
+    static InputNumberException numberException = new InputNumberException(); //숫자 입력 예외
 
     public Group[] getGroups(){
         return this.groups;
@@ -126,6 +137,7 @@ public class Groups {
             }
         }
 
+        //이하 동문 단지 spentTime -> totalPay만 다름
         System.out.println("스토어에서 사용한 금액의 기준값을 입력해주세요.");
         while(true){
             System.out.print(">> ");
@@ -174,12 +186,12 @@ public class Groups {
             System.out.print(">> ");
 
             String input = scanner.next();
-            int gradeType = numberException.exception(input);
+            int gradeType = numberException.exception(input); //숫자가 아니면 -1 리턴
             if(gradeType == -1) continue;
 
 
-            if(gradeType >= 1 && gradeType <= 4){
-                if(gradeType == 4 ) return;
+            if(gradeType >= 1 && gradeType <= 4){ //메뉴에 있는 숫자 범위
+                if(gradeType == 4 ) return; //4번 입력 받으면 종료
                 if(this.groups[gradeType-1] == null){
                     System.out.println("수정할 기준이 없습니다.");
                 }else{
@@ -192,7 +204,7 @@ public class Groups {
                     System.out.println("    수정이 완료되었습니다.");
                     System.out.println("                          』");
                 }
-            }else{
+            }else{ // 1~4번이 아니면
                 System.out.println("『");
                 System.out.println("    메뉴에 있는 번호만 선택해주세요.");
                 System.out.println("                                  』");
@@ -209,7 +221,6 @@ public class Groups {
      * @return 기준값을 벗어나면 false 아니면 true
      */
     public boolean exceedGradeException(int inputType, int input, int gradeType){
-
         if(inputType == 1){ //spent time
             switch (gradeType){
                 case 0: //general

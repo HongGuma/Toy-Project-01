@@ -5,14 +5,23 @@ import grade.*;
 
 import java.util.Scanner;
 
+/**
+ * @author 홍수희
+ * 분류된 고객의 데이터를 확인
+ */
 public class ClassifiedCustomers {
-    private Customers[] classifiedCustomers;
-    private Customer[] customers;
-    private Group[] groups;
+    private Customers[] classifiedCustomers; //분류된 고객 데이터
+    private Customer[] customers; //분류되기전 고객 데이터
+    private Group[] groups; //등급
 
-    static Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in); //scanner
     static InputNumberException numberException = new InputNumberException(); //숫자만 입력받기
 
+    /**
+     * classfiedCustomers 생성자
+     * @param customers : 분류되기전 기존의 고객 데이터
+     * @param groups : 설정된 등급 데이터
+     */
     public ClassifiedCustomers(Customers customers, Groups groups){
         this.customers = customers.getCustomers();
         this.groups = groups.getGroups();
@@ -26,11 +35,11 @@ public class ClassifiedCustomers {
         int i=0;
         for(Customers customers1 : classifiedCustomers){
             System.out.println("[["+Grade.values()[i]+"]]");
-            if(customers1 != null && customers1.getCustomers().length > 0){
+            if(customers1 != null && customers1.getCustomers().length > 0){ //null 이 아니라면
                 for(Customer customer : customers1.getCustomers()){
                     System.out.println(customer.toString());
                 }
-            }else{
+            }else{ //null 이라면
                 System.out.println("null");
             }
             i++;
@@ -41,6 +50,7 @@ public class ClassifiedCustomers {
      * 제일 기본 분류 (등급만으로만 분류되어 있음 정렬 X)
      */
     public void setDefault(){
+        //설정된 기준이 있는지 확인
         for(Group  group : this.groups){
             if(group == null){
                 System.out.println("등급을 먼저 설정해주세요.");
@@ -52,24 +62,25 @@ public class ClassifiedCustomers {
         for(Customer customer : this.customers){
             if(customer != null){
                 switch (compareRange(customer)){
-                    case 0:
+                    case 0: //general
                         customer.setGrade(Grade.GENERAL);
                         break;
-                    case 1:
+                    case 1: //vip
                         customer.setGrade(Grade.VIP);
                         break;
-                    case 2:
+                    case 2: //vvip
                         customer.setGrade(Grade.VVIP);
                         break;
-                    case -1:
+                    case -1: //none
                         customer.setGrade(Grade.NONE);
                         break;
-                    default:
+                    default: //error
                         System.out.println("error");
                 }
             }
         }
 
+        //등급 개수 만큼 반복
         for(int num = 0; num<Grade.values().length; num++){
             int cnt = 0;
 
@@ -173,86 +184,100 @@ public class ClassifiedCustomers {
         }
     }
 
-
+    /**
+     * 이름순으로 정렬
+     * @param sortType 1: 오름차순, 2: 내림차순
+     * @param customers 정렬되기전 분류된 데이터
+     * @return 정렬된 데이터
+     */
     public Customer[] sortByName(int sortType, Customer[] customers){
-        Customer[] tmps = customers;
         if(sortType == 1){ //오름차순
-            for(int i=0; i<tmps.length; i++){
-                for(int j=i; j<tmps.length; j++){
-                    if(tmps[i].getCustomerName().compareTo(tmps[j].getCustomerName()) > 0){
-                        Customer tmp = tmps[i];
-                        tmps[i] = tmps[j];
-                        tmps[j] = tmp;
+            for(int i = 0; i< customers.length; i++){
+                for(int j = i; j< customers.length; j++){
+                    if(customers[i].getCustomerName().compareTo(customers[j].getCustomerName()) > 0){
+                        Customer tmp = customers[i];
+                        customers[i] = customers[j];
+                        customers[j] = tmp;
                     }
                 }
             }
         }else{ //내림차순
-            for(int i=0; i<tmps.length; i++){
-                for(int j=i; j<tmps.length; j++){
-                    if(tmps[i].getCustomerName().compareTo(tmps[j].getCustomerName()) < 0){
-                        Customer tmp = tmps[i];
-                        tmps[i] = tmps[j];
-                        tmps[j] = tmp;
+            for(int i = 0; i< customers.length; i++){
+                for(int j = i; j< customers.length; j++){
+                    if(customers[i].getCustomerName().compareTo(customers[j].getCustomerName()) < 0){
+                        Customer tmp = customers[i];
+                        customers[i] = customers[j];
+                        customers[j] = tmp;
                     }
                 }
             }
         }
 
-        return tmps;
+        return customers;
     }
 
+    /**
+     * 스토어 이용시간순 정렬
+     * @param sortType 1: 오름차순, 2: 내림차순
+     * @param customers 정렬되기전 분류된 고객 데이터
+     * @return 정렬된 고객 데이터
+     */
     public Customer[] sortBySpentTime(int sortType, Customer[] customers){
-        Customer[] tmps = customers;
         if(sortType == 1){ //오름차순
-            for(int i=0; i<tmps.length; i++){
-                for(int j=i; j<tmps.length; j++){
-                    if(tmps[i].getSpentTime() > tmps[j].getSpentTime()){
-                        Customer tmp = tmps[i];
-                        tmps[i] = tmps[j];
-                        tmps[j] = tmp;
+            for(int i = 0; i< customers.length; i++){
+                for(int j = i; j< customers.length; j++){
+                    if(customers[i].getSpentTime() > customers[j].getSpentTime()){
+                        Customer tmp = customers[i];
+                        customers[i] = customers[j];
+                        customers[j] = tmp;
                     }
                 }
             }
         }else{ //내림차순
-            for(int i=0; i<tmps.length; i++){
-                for(int j=i; j<tmps.length; j++){
-                    if(tmps[i].getSpentTime() < tmps[j].getSpentTime()){
-                        Customer tmp = tmps[i];
-                        tmps[i] = tmps[j];
-                        tmps[j] = tmp;
+            for(int i = 0; i< customers.length; i++){
+                for(int j = i; j< customers.length; j++){
+                    if(customers[i].getSpentTime() < customers[j].getSpentTime()){
+                        Customer tmp = customers[i];
+                        customers[i] = customers[j];
+                        customers[j] = tmp;
                     }
                 }
             }
         }
 
-        return tmps;
+        return customers;
     }
 
+    /**
+     * 스토어에서 사용한 금액순으로 정렬
+     * @param sortType 1: 오름차순, 2:내림차순
+     * @param customers 정렬되기전 분류된 데이터
+     * @return 정렬된 데이터
+     */
     public Customer[] sortByTotalPay(int sortType, Customer[] customers){
-        Customer[] tmps = customers;
         if(sortType == 1){ //오름차순
-            for(int i=0; i<tmps.length; i++){
-                for(int j=i; j<tmps.length; j++){
-                    if(tmps[i].getTotalPay() > tmps[j].getTotalPay()){
-                        Customer tmp = tmps[i];
-                        tmps[i] = tmps[j];
-                        tmps[j] = tmp;
+            for(int i = 0; i< customers.length; i++){
+                for(int j = i; j< customers.length; j++){
+                    if(customers[i].getTotalPay() > customers[j].getTotalPay()){
+                        Customer tmp = customers[i];
+                        customers[i] = customers[j];
+                        customers[j] = tmp;
                     }
                 }
             }
         }else{ //내림차순
-            for(int i=0; i<tmps.length; i++){
-                for(int j=i; j<tmps.length; j++){
-                    if(tmps[i].getTotalPay() < tmps[j].getTotalPay()){
-                        Customer tmp = tmps[i];
-                        tmps[i] = tmps[j];
-                        tmps[j] = tmp;
+            for(int i = 0; i< customers.length; i++){
+                for(int j = i; j< customers.length; j++){
+                    if(customers[i].getTotalPay() < customers[j].getTotalPay()){
+                        Customer tmp = customers[i];
+                        customers[i] = customers[j];
+                        customers[j] = tmp;
                     }
                 }
             }
         }
 
-        return tmps;
+        return customers;
     }
 
 

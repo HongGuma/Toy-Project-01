@@ -1,5 +1,9 @@
 package exception;
 
+/**
+ * @author 홍수희
+ * 입력받을 때 숫자만 들어왔는지 판단
+ */
 public class InputNumberException {
     public int exception(String input){
         String number = "";

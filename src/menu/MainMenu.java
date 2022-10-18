@@ -12,16 +12,21 @@ import java.util.Scanner;
  * 메인 메뉴 출력하는 클래스
  */
 public class MainMenu {
-    static Scanner scanner = new Scanner(System.in);
-    static InputNumberException numberException = new InputNumberException();
-    public void printMainMenu(){
-        Customers customers = new Customers();
-        Groups groups = new Groups();
-        ClassifiedCustomers classifiedCustomer = new ClassifiedCustomers(customers,groups);
+    static Scanner scanner = new Scanner(System.in); //scanner
+    static InputNumberException numberException = new InputNumberException(); //숫자만 입력 받게
 
-        GradeMenu gradeMenu = new GradeMenu();
-        CustomerMenu customerMenu = new CustomerMenu();
-        ClassificationMenu classificationMenu = new ClassificationMenu();
+    /**
+     * 메인 메뉴 출력하는 함수
+     */
+    public void printMainMenu(){
+        Customers customers = new Customers(); //customer 객체
+        Groups groups = new Groups(); //groups 객체
+        ClassifiedCustomers classifiedCustomer = new ClassifiedCustomers(customers,groups); //classification 객체
+
+        GradeMenu gradeMenu = new GradeMenu(); //등급 설정 메뉴
+        CustomerMenu customerMenu = new CustomerMenu(); //고객 설정 메뉴
+        ClassificationMenu classificationMenu = new ClassificationMenu(); //고객 분류 메뉴
+
         while(true){
             System.out.println("=========== 메인 메뉴 ===========");
             System.out.println("1. 등급 분류 설정");
@@ -32,8 +37,8 @@ public class MainMenu {
             System.out.print(">> ");
 
             String input = scanner.next();
-            int inputNum = numberException.exception(input);
-            if(inputNum == -1) continue;
+            int inputNum = numberException.exception(input); //숫자가 아니면 -1 리턴
+            if(inputNum == -1) continue; //다시 입력 받기
 
             switch (inputNum){
                 case 1:

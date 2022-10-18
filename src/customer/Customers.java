@@ -5,18 +5,31 @@ import exception.InputNumberException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * @author 홍수희
+ * Customer 객체 배열을 담은 객체
+ * 고객 정보 입력, 수정, 확인 기능이 있다.
+ */
 public class Customers {
 
-    private Customer[] customers;
+    private Customer[] customers; //customer 객체 배열
     private final String ID_REGEX = "^[a-zA-Z0-9_-]{4,}$"; //아이디 정규표현식 (영문자 4자 이상만 가능)
     static Scanner scanner = new Scanner(System.in); //scanner
     static InputNumberException numberException = new InputNumberException(); //숫자만 입력받기
 
+    /**
+     * Customers 기본 생성자
+     */
     public Customers(){
         this.customers = new Customer[10];
         test(); //테스트값
     }
 
+    /**
+     * Customers 생성자
+     * 새로운 수정된 customers 객체 배열을 현재 객체 배열과 바꾼다.
+     * @param customers : 수정된 객체
+     */
     public Customers(Customer[] customers){
         this.customers = customers;
     }
@@ -33,6 +46,7 @@ public class Customers {
         }
     }
 
+    //getter setter
     public Customer[] getCustomers(){
         return this.customers;
     }
@@ -49,7 +63,7 @@ public class Customers {
         System.out.print(">>");
         String input = scanner.next();
 
-        customerCnt = numberException.exception(input);
+        customerCnt = numberException.exception(input); //입력이 숫자인지 확인
         if(customerCnt == -1) return;
 
         Customer[] newCustomers = inputCustomerInfo(customerCnt); //newCustomers 라는 새로운 객체에 입력 받았던 데이터 넣기

@@ -12,11 +12,12 @@ import java.util.Scanner;
 public class ClassificationMenu {
     static Scanner scanner = new Scanner(System.in);
     static InputNumberException numberException = new InputNumberException();
+
     /**
-     * 고객을 등급별로 분류하는 메뉴를 출력하는 함수
+     * 분류된 고객의 데이터를 확인하는 함수
+     * @param classifiedCustomer :MainMenu에서 생성한 객체
      */
     public void printClassificationMenu(ClassifiedCustomers classifiedCustomer){
-
         while (true){
             System.out.println("+++++++++++ 등급별 분류 +++++++++++");
             System.out.println("1. 등급별 분류");
@@ -28,13 +29,13 @@ public class ClassificationMenu {
             System.out.print(">>");
 
             String input = scanner.next();
-            int inputNum = numberException.exception(input);
+            int inputNum = numberException.exception(input); //숫자가 아니면 -1 리턴
             if(inputNum == -1) continue;
 
             switch (inputNum){
                 case 1:
-                    classifiedCustomer.setDefault();
-                    classifiedCustomer.show();
+                    classifiedCustomer.setDefault(); //가장 기본 분류
+                    classifiedCustomer.show(); //분류된 데이터 출력하는 함수
                     break;
                 case 2:
                 case 3:

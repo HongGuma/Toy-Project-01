@@ -12,9 +12,12 @@ import java.util.Scanner;
 public class CustomerMenu {
     static Scanner scanner = new Scanner(System.in);
     static InputNumberException numberException = new InputNumberException();
+
+    /**
+     * 고객 정보를 입력, 수정, 확인 하는 메뉴
+     * @param customers :MainMenu에서 생성한 customer 객체
+     */
     public void printCustomerMenu(Customers customers){
-
-
         while (true){
             System.out.println("########### 고객 정보 ###########");
             System.out.println("1. 고객 정보 추가하기");
@@ -26,7 +29,7 @@ public class CustomerMenu {
             System.out.print(">>");
 
             String input = scanner.next();
-            int inputNum = numberException.exception(input);
+            int inputNum = numberException.exception(input); //숫자가 아니면 -1 리턴
             if(inputNum == -1) continue;
 
             switch (inputNum){

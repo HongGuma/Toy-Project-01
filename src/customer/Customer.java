@@ -3,15 +3,18 @@ package customer;
 
 import grade.Grade;
 
+/**
+ * @author 홍수희
+ * 고객 객체
+ */
 public class Customer {
-    public static int serial = 0;
-    protected int customerSerialNum;
-    protected String customerName;
-    protected String customerId;
-    protected int spentTime;
-    protected int totalPay;
-
-    protected Grade grade;
+    public static int serial = 0; //static, 객체가 하나 생성될 때 마다 1씩 증가, 모든 객체가 공유
+    protected int customerSerialNum; //객체 고유의 값
+    protected String customerName; //고객 이름
+    protected String customerId; //고객 아이디
+    protected int spentTime; //고객이 스토어를 이용한 시간
+    protected int totalPay; //고객이 스토어에서 이용한 금액
+    protected Grade grade; //해당 고객의 등급
 
 
 
