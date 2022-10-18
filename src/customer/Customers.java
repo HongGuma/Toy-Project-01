@@ -78,9 +78,6 @@ public class Customers {
      * @return 새로만든 Customer 객체 배열
      */
     public Customer[] inputCustomerInfo(int num){
-        //TODO : 아이디 입력시 중복 체크? 기능 추가하기?
-        //TODO : 입력받을때 예외 상황이 발생하면 처음부터 돌아가는거 수정하기
-        //TODO: 문자 잘못 입력해도 처음으로 안돌아감.(bug)
         Customer[] insertCustomers = new Customer[num]; //입력받은 수 만큼 Customer 객체 배열 생성
         String name = ""; //입력받을 사용자 이름
         String id = ""; //입력받을 사용자 아이디
@@ -114,6 +111,7 @@ public class Customers {
                 spentTime = Integer.parseInt(input1);
             }else{
                 System.out.println("【 숫자만 입력해주세요. 처음으로 돌아갑니다. 】");
+                continue;
             }
             //스토어 사용 금액 입력 받기
             System.out.println("스토어에서 사용한 금액 입력");
@@ -123,6 +121,7 @@ public class Customers {
                 totalPay = Integer.parseInt(input1);
             }else{
                 System.out.println("【 숫자만 입력해주세요. 처음으로 돌아갑니다. 】");
+                continue;
             }
             //입력받은 데이터로 새 customer 객체 생성해서 customers 배열에 넣기
             insertCustomers[i] = new Customer(name,id,spentTime,totalPay);
