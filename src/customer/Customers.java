@@ -57,7 +57,7 @@ public class Customers {
     /**
      * 고객의 데이터를 추가하는 함수
      */
-    public void insertCustomer(){
+    public void addCustomer(){
         int customerCnt = 0; //추가할 고객의 수
         System.out.println("추가할 고객의 인원을 입력해주세요."); //입력 유도 메시지
         System.out.print(">>");
@@ -103,7 +103,7 @@ public class Customers {
             // 이름 입력받기
             System.out.println("~** "+(i+1)+"번 입력 중 **~");
             System.out.println("고객 이름 입력 (3글자 이상)");
-            System.out.print(">>");
+            System.out.print(">> ");
             name = scanner.next();
             if(name.length() < 3){ //3글자 이하 입력 예외 처리
                 System.out.println("【 3글자 이상 입력해주세요. 】");
@@ -111,7 +111,7 @@ public class Customers {
             }
             // 아이디 입력 받기
             System.out.println("고객 아이디 입력 (영문자, 4글자 이상)");
-            System.out.print(">>");
+            System.out.print(">> ");
             id = scanner.next();
             if(!Pattern.matches(ID_REGEX,id)){ //정규표현식이랑 맞지 않을때 예외 처리
                 System.out.println("【 아이디는 영문자만 4글자 이상 입력해주세요. 처음으로 돌아갑니다. 】");
@@ -119,7 +119,7 @@ public class Customers {
             }
             //스토어 이용시간 입력 받기
             System.out.println("스토어 이용시간 입력");
-            System.out.print(">>");
+            System.out.print(">> ");
             String input1 = scanner.next();
             if(input1.charAt(0) >= 48 && input1.charAt(0) <= 57){ //숫자가 아닐때 예외 처리
                 spentTime = Integer.parseInt(input1);
@@ -129,7 +129,7 @@ public class Customers {
             }
             //스토어 사용 금액 입력 받기
             System.out.println("스토어에서 사용한 금액 입력");
-            System.out.print(">>");
+            System.out.print(">> ");
             String input2 = scanner.next();
             if(input2.charAt(0) >= 48 && input2.charAt(0) <= 57){ //숫자가 아닐때 예외 처리
                 totalPay = Integer.parseInt(input1);
