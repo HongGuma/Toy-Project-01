@@ -232,7 +232,6 @@ public class Customers {
      * 고객정보 수정하는 함수
      */
     public void editCustomer(){
-        //TODO: 입력받는 코드 inputCustomerInfo로 합치기
         System.out.print("수정할 고객의 아이디를 입력해주세요 >> ");
         String inputId = scanner.next();
         for(Customer customer : this.customers){
@@ -314,5 +313,8 @@ public class Customers {
                 }
             }
         }
+        System.out.println("『");
+        System.out.println("    없는 아이디 입니다.");
+        System.out.println("                       』");
     }
 }
