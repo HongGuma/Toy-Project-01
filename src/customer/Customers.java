@@ -117,6 +117,10 @@ public class Customers {
                 System.out.println("【 아이디는 영문자만 4글자 이상 입력해주세요. 처음으로 돌아갑니다. 】");
                 continue;
             }
+            if(checkDuplication(id) == -1){
+                System.out.println("【 기존에 있는 아이디 입니다. 처음으로 돌아갑니다. 】");
+                continue;
+            }
             //스토어 이용시간 입력 받기
             System.out.println("스토어 이용시간 입력");
             System.out.print(">> ");
@@ -271,8 +275,12 @@ public class Customers {
                                 if(!Pattern.matches(ID_REGEX,newId)){
                                     System.out.println("영문자 및 숫자 조합으로 4글자 이상 입력해주세요.");
                                 }else{
-                                    customer.setCustomerId(newId);
-                                    break;
+                                    if(checkDuplication(newId) == -1){
+                                        System.out.println("이미 있는 아이디 입니다. 새로운 아이디를 입력해주세요.");
+                                    }else{
+                                        customer.setCustomerId(newId);
+                                        break;
+                                    }
                                 }
                             }
                             break;
@@ -316,5 +324,18 @@ public class Customers {
         System.out.println("『");
         System.out.println("    없는 아이디 입니다.");
         System.out.println("                       』");
+    }
+
+    /**
+     * 고객 아이디 중복 체크하는 함수
+     * @param newID : 새로운 아이디
+     * @return -1 : 중복, 0 : 중복 안됨
+     */
+    public int checkDuplication(String newID){
+        for(Customer customer : this.customers){
+            if(customer != null && newID.equals(customer.getCustomerId()))
+                return -1;
+        }
+        return 0;
     }
 }
