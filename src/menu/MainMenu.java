@@ -14,15 +14,15 @@ import java.util.Scanner;
 public class MainMenu {
     static Scanner scanner = new Scanner(System.in); //scanner
     static InputNumberException numberException = new InputNumberException(); //숫자만 입력 받게
+    static Customers customers = new Customers(); //customer 객체
+    static Groups groups = new Groups(); //groups 객체
+    static ClassifiedCustomers classifiedCustomer = new ClassifiedCustomers(customers,groups); //classification 객체
+
 
     /**
      * 메인 메뉴 출력하는 함수
      */
     public void printMainMenu(){
-        Customers customers = new Customers(); //customer 객체
-        Groups groups = new Groups(); //groups 객체
-        ClassifiedCustomers classifiedCustomer = new ClassifiedCustomers(customers,groups); //classification 객체
-
         GradeMenu gradeMenu = new GradeMenu(); //등급 설정 메뉴
         CustomerMenu customerMenu = new CustomerMenu(); //고객 설정 메뉴
         ClassificationMenu classificationMenu = new ClassificationMenu(); //고객 분류 메뉴
@@ -48,6 +48,7 @@ public class MainMenu {
                     customerMenu.printCustomerMenu(customers);
                     break;
                 case 3:
+                    classifiedCustomer.setDatas(customers, groups);
                     classificationMenu.printClassificationMenu(classifiedCustomer);
                     break;
                 case 4:

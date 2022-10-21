@@ -3,6 +3,7 @@ package customer;
 import exception.InputNumberException;
 import grade.*;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -26,6 +27,11 @@ public class ClassifiedCustomers {
         this.customers = customers.getCustomers();
         this.groups = groups.getGroups();
         this.classifiedCustomers = new Customers[Grade.values().length];
+    }
+
+    public void setDatas(Customers customers, Groups groups){
+        this.customers = customers.getCustomers();
+        this.groups = groups.getGroups();
     }
 
     /**
