@@ -5,6 +5,11 @@ package exception;
  * 입력받을 때 숫자만 들어왔는지 판단
  */
 public class InputNumberException {
+    /**
+     * 입력값이 숫자인지 확인
+     * @param input :입력값
+     * @return string->int 로 변환한 값, -1 이면 문자가 섞임
+     */
     public int exception(String input){
         String number = "";
         //들어온 input을 처음부터 끝까지 검사한다.

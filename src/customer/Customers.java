@@ -57,7 +57,7 @@ public class Customers {
     /**
      * 고객의 데이터를 추가하는 함수
      */
-    public void insertCustomer(){
+    public void addCustomer(){
         int customerCnt = 0; //추가할 고객의 수
         System.out.println("추가할 고객의 인원을 입력해주세요."); //입력 유도 메시지
         System.out.print(">>");
@@ -97,46 +97,51 @@ public class Customers {
         String id = ""; //입력받을 사용자 아이디
         int spentTime = 0; //입력받을 스토어 이용 시간
         int totalPay = 0; //입력받을 사용한 금액
-        int i=0;
+        int i=0; // i번째 고객
 
         while(i<num){
+            System.out.println("~** "+(i+1)+"번 고객 정보 입력 중 **~");
+
             // 이름 입력받기
-            System.out.println("~** "+(i+1)+"번 입력 중 **~");
-            System.out.println("고객 이름 입력 (3글자 이상)");
-            System.out.print(">>");
-            name = scanner.next();
-            if(name.length() < 3){ //3글자 이하 입력 예외 처리
+            System.out.println("고객의 이름을 입력해주세요. (3글자 이상)");
+            while(true){
+                System.out.print(">> ");
+                name = scanner.next();
+                if(name.length() >= 3) break;
                 System.out.println("【 3글자 이상 입력해주세요. 】");
-                continue;
             }
+
             // 아이디 입력 받기
-            System.out.println("고객 아이디 입력 (영문자, 4글자 이상)");
-            System.out.print(">>");
-            id = scanner.next();
-            if(!Pattern.matches(ID_REGEX,id)){ //정규표현식이랑 맞지 않을때 예외 처리
-                System.out.println("【 아이디는 영문자만 4글자 이상 입력해주세요. 처음으로 돌아갑니다. 】");
-                continue;
+            System.out.println("고객 아이디를 입력해주세요. (영문자, 4글자 이상)");
+            while(true){
+                System.out.print(">> ");
+                id = scanner.next();
+                if(!Pattern.matches(ID_REGEX,id)){ //정규표현식이랑 맞지 않을때 예외 처리
+                    System.out.println("【 아이디는 영문자만 4글자 이상 입력해주세요. 】");
+                }else{
+                    if(checkDuplication(id) == 0) break;
+                    System.out.println("【 기존에 있는 아이디 입니다.】");
+                }
             }
+
             //스토어 이용시간 입력 받기
-            System.out.println("스토어 이용시간 입력");
-            System.out.print(">>");
-            String input1 = scanner.next();
-            if(input1.charAt(0) >= 48 && input1.charAt(0) <= 57){ //숫자가 아닐때 예외 처리
-                spentTime = Integer.parseInt(input1);
-            }else{
-                System.out.println("【 숫자만 입력해주세요. 처음으로 돌아갑니다. 】");
-                continue;
+            System.out.println("고객의 스토어 이용시간을 입력해주세요.");
+            while (true){
+                System.out.print(">> ");
+                String input1 = scanner.next();
+                spentTime = numberException.exception(input1);
+                if(spentTime != -1) break;
             }
+
             //스토어 사용 금액 입력 받기
-            System.out.println("스토어에서 사용한 금액 입력");
-            System.out.print(">>");
-            String input2 = scanner.next();
-            if(input2.charAt(0) >= 48 && input2.charAt(0) <= 57){ //숫자가 아닐때 예외 처리
-                totalPay = Integer.parseInt(input1);
-            }else{
-                System.out.println("【 숫자만 입력해주세요. 처음으로 돌아갑니다. 】");
-                continue;
+            System.out.println("고객이 스토어에서 사용한 금액을 입력해주세요.");
+            while(true){
+                System.out.print(">> ");
+                String input2 = scanner.next();
+                totalPay = numberException.exception(input2);
+                if(totalPay != -1) break;
             }
+
             //입력받은 데이터로 새 customer 객체 생성해서 customers 배열에 넣기
             insertCustomers[i] = new Customer(name,id,spentTime,totalPay);
             i++;
@@ -232,7 +237,6 @@ public class Customers {
      * 고객정보 수정하는 함수
      */
     public void editCustomer(){
-        //TODO: 입력받는 코드 inputCustomerInfo로 합치기
         System.out.print("수정할 고객의 아이디를 입력해주세요 >> ");
         String inputId = scanner.next();
         for(Customer customer : this.customers){
@@ -257,7 +261,7 @@ public class Customers {
                                 System.out.print("수정할 이름 : ");
                                 String newName = scanner.next();
                                 if(newName.length() < 3){
-                                    System.out.println("3글자 이상 입력해주세요.");
+                                    System.out.println("【 3글자 이상 입력해주세요. 】");
                                 }else{
                                     customer.setCustomerName(newName);
                                     break;
@@ -270,10 +274,14 @@ public class Customers {
                                 System.out.print("수정할 아이디 : ");
                                 String newId = scanner.next();
                                 if(!Pattern.matches(ID_REGEX,newId)){
-                                    System.out.println("영문자 및 숫자 조합으로 4글자 이상 입력해주세요.");
+                                    System.out.println("【 영문자 및 숫자 조합으로 4글자 이상 입력해주세요. 】");
                                 }else{
-                                    customer.setCustomerId(newId);
-                                    break;
+                                    if(checkDuplication(newId) == -1){
+                                        System.out.println("【 이미 있는 아이디 입니다. 새로운 아이디를 입력해주세요. 】");
+                                    }else{
+                                        customer.setCustomerId(newId);
+                                        break;
+                                    }
                                 }
                             }
                             break;
@@ -286,7 +294,7 @@ public class Customers {
                                     customer.setSpentTime(Integer.parseInt(newTime));
                                     break;
                                 }else{
-                                    System.out.println("숫자만 입력해주세요.");
+                                    System.out.println("【 숫자만 입력해주세요. 】");
                                 }
                             }
                             break;
@@ -299,12 +307,12 @@ public class Customers {
                                     customer.setTotalPay(Integer.parseInt(newPay));
                                     break;
                                 }else{
-                                    System.out.println("숫자만 입력해주세요.");
+                                    System.out.println("【 숫자만 입력해주세요. 】");
                                 }
                             }
                             break;
                         case 5:
-                            System.out.println("수정이 완료되었습니다.");
+                            System.out.println("【 수정이 완료되었습니다. 】");
                             return;
                         default:
                             System.out.println("『");
@@ -314,5 +322,21 @@ public class Customers {
                 }
             }
         }
+        System.out.println("『");
+        System.out.println("    없는 아이디 입니다.");
+        System.out.println("                       』");
+    }
+
+    /**
+     * 고객 아이디 중복 체크하는 함수
+     * @param newID : 새로운 아이디
+     * @return -1 : 중복, 0 : 중복 안됨
+     */
+    public int checkDuplication(String newID){
+        for(Customer customer : this.customers){
+            if(customer != null && newID.equals(customer.getCustomerId()))
+                return -1;
+        }
+        return 0;
     }
 }

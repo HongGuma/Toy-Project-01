@@ -34,7 +34,7 @@ public class CustomerMenu {
 
             switch (inputNum){
                 case 1:
-                    customers.insertCustomer();
+                    customers.addCustomer();
                     break;
                 case 2:
                     customers.printCustomer();
