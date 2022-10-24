@@ -22,7 +22,6 @@ public class Customers {
      */
     public Customers(){
         this.customers = new Customer[10];
-        test(); //테스트값
     }
 
     /**
@@ -32,18 +31,6 @@ public class Customers {
      */
     public Customers(Customer[] customers){
         this.customers = customers;
-    }
-
-    /**
-     * 테스트용 데이터 생성 함수
-     */
-    public void test(){
-        for(int i=0; i<8; i++){
-            customers[i] = new Customer("tester"+i,"tester"+i,
-                    (int) ((Math.random() * 10 + 1) * 10 + (Math.random() * 10 + 1)),
-                    (int) ( ((Math.random()*10+1) * 1000) + ((Math.random() * 10 + 1) * 100) )
-            );
-        }
     }
 
     //getter setter

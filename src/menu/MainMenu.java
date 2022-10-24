@@ -1,8 +1,11 @@
 package menu;
 
 import customer.ClassifiedCustomers;
+import customer.Customer;
 import customer.Customers;
 import exception.InputNumberException;
+import grade.Grade;
+import grade.Group;
 import grade.Groups;
 
 import java.util.Scanner;
@@ -18,11 +21,36 @@ public class MainMenu {
     static Groups groups = new Groups(); //groups 객체
     static ClassifiedCustomers classifiedCustomer = new ClassifiedCustomers(customers,groups); //classification 객체
 
+    /**
+     * 테스트용 데이터 생성 함수 (등급 정보)
+     */
+    public Group[] groupTEST(){
+        Group[] groups = new Group[3];
+        groups[0] = new Group(Grade.GENERAL,10,1000);
+        groups[1] = new Group(Grade.VIP,30,3000);
+        groups[2] = new Group(Grade.VVIP, 50, 5000);
+        return groups;
+    }
+    /**
+     * 테스트용 데이터 생성 함수 (고객 정보)
+     */
+    public Customer[] customerTEST(){
+        Customer[] customers = new Customer[10];
+        for(int i=0; i<8; i++){
+            customers[i] = new Customer("tester"+i,"tester"+i,
+                    (int) ((Math.random() * 10 + 1) * 10 + (Math.random() * 10 + 1)),
+                    (int) ( ((Math.random()*10+1) * 1000) + ((Math.random() * 10 + 1) * 100) )
+            );
+        }
+        return customers;
+    }
 
     /**
      * 메인 메뉴 출력하는 함수
      */
     public void printMainMenu(){
+        groups.setGroups(groupTEST());
+        customers.setCustomers(customerTEST());
         GradeMenu gradeMenu = new GradeMenu(); //등급 설정 메뉴
         CustomerMenu customerMenu = new CustomerMenu(); //고객 설정 메뉴
         ClassificationMenu classificationMenu = new ClassificationMenu(); //고객 분류 메뉴

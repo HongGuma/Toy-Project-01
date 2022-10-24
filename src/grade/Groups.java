@@ -18,27 +18,21 @@ public class Groups {
      */
     public Groups(){
         this.groups = new Group[3];
-        test(); //test값 생성
     }
 
     public Groups(Group[] groups){
         this.groups = groups;
     }
 
-    /**
-     * test값 생성하는 함수
-     */
-    public void test(){
-        this.groups[0] = new Group(Grade.GENERAL,10,1000);
-        this.groups[1] = new Group(Grade.VIP,30,3000);
-        this.groups[2] = new Group(Grade.VVIP, 50, 5000);
-    }
-
     static Scanner scanner = new Scanner(System.in); //scanner
     static InputNumberException numberException = new InputNumberException(); //숫자 입력 예외
 
+    //getter setter
     public Group[] getGroups(){
         return this.groups;
+    }
+    public void setGroups(Group[] groups){
+        this.groups = groups;
     }
 
     /**
